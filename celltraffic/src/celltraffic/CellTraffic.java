@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: CellTraffic.java,v 1.7 2003/10/28 15:48:56 jsprenger Exp $
+ * $Id: CellTraffic.java,v 1.8 2003/10/28 18:45:01 moleman Exp $
  */
 package celltraffic;
 
@@ -36,11 +36,18 @@ public class CellTraffic {
         JPanel panel = new JPanel();
         GridLayout gridLayout = new GridLayout(1, 2);
         BorderLayout bl = new BorderLayout();
+//<<<<<<< CellTraffic.java
+      //  RouteSingleLane s = new RouteSingleLane(300);
+       
+     //   s.setGraphikPanel(gp);
+		/*
+//=======
         RouteSingleLane s = new RouteSingleLane(300);
         GraphikPanel gp = new GraphikPanel(s);
         s.setGraphikPanel(gp);
 		
 		
+//>>>>>>> 1.7
 		//######################## Test
 		s.road[0][2]= new Car();
 		s.road[0][4]= new Car();
@@ -53,25 +60,27 @@ public class CellTraffic {
 		gp.setList(s.road);
 		
 		//#######################ENDE Test	
-		
+		*/
 		
 
 
         
         RouteSingleLane rsl1 = new RouteSingleLane();
-        Source s1= new Source();
-        Drain d1 = new Drain();
+		GraphikPanel gp = new GraphikPanel(rsl1);
+      //  Source s1= new Source();
+       // Drain d1 = new Drain();
         
-        rsl1.setNextRoute(s1);
-        s1.setNextRoute(d1);
+        rsl1.setNextRoute(rsl1);
+       // s1.setNextRoute(d1);
         
-        for(int i=1; i<50;i++){
-            s1.update();
-            rsl1.update();
-            s1.update();
-        }
+      /*  for(int i=1; i<50;i++){
+         //   s1.update();
+           // rsl1.update();
+            
+         //   s1.update();
+        }*/
         
-        ButtonPanel buttons = new ButtonPanel(s, gp);
+        ButtonPanel buttons = new ButtonPanel(rsl1, gp);
 
         //	panel.add(gp,BorderLayout.WEST);
         //	panel.add(buttons,BorderLayout.EAST);
@@ -80,8 +89,8 @@ public class CellTraffic {
 	    //frame.getContentPane().setLayout(bl);
 
         frame.getContentPane().add(BorderLayout.CENTER,gp);
-        frame.getContentPane().add(BorderLayout.EAST,buttons);
-        frame.setSize(800, 800);
+        frame.getContentPane().add(BorderLayout.SOUTH,buttons);
+        frame.setSize(800, 400);
         WindowListener l = new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);

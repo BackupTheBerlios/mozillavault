@@ -8,13 +8,14 @@ package objects;
  */
 public class Car extends Vehicle {
 
-    /**
-     * 
-     */
-    public Car() {
-        super();
-        
-        // TODO Auto-generated constructor stub
-    }
+	
+	/**
+	 *  
+	 */
+	public Car() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 
 }

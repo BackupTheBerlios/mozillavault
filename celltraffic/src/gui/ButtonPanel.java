@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- *$Id: ButtonPanel.java,v 1.7 2003/10/25 14:41:22 jsprenger Exp $
+ *$Id: ButtonPanel.java,v 1.8 2003/10/28 18:46:48 moleman Exp $
  */
 package gui;
 
@@ -74,16 +74,8 @@ public class ButtonPanel extends JPanel {
 	}
 private class WeiterAction extends AbstractAction {
 	public void actionPerformed(ActionEvent evt) {
-
-		Object l[][] = w.getList();
-		for (int i = 0; i < l.length; i++) {
-			{
-				Vehicle a = (Vehicle) l[i][0];
-				//a.setX(a.getX()+10);
-				gp.repaint();
-			}
-
-		}
+		w.update() ;
+		gp.repaint();
 
 	}
 
