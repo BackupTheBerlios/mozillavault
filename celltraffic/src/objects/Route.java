@@ -5,6 +5,7 @@
 package objects;
 
 import java.awt.Point;
+import java.util.Random;
 
 /**
  * @author Jonas Sprenger
@@ -17,29 +18,29 @@ public abstract class Route {
 	 */
     Route nextRoute;
 
+    int speedLimit = Integer.MAX_VALUE;
+
     public Object road[][];
 
     public Route(int length) {
         nextRoute = null;
         road = new Object[1][length];
-        for (int i = 0; i < length - 1; i++) {
+        for (int i = 0; i <= length - 1; i++) {
             road[0][i] = new EmptyVehicle();
         }
 
-        road[0][90] = new Car();
-        road[0][34] = new Car();
-        road[0][45] = new Car();
-        road[0][50] = new Car();
-        road[0][52] = new Car();
-        road[0][11] = new Car();
-        road[0][22] = new Car();
+        /*
+		 * road[0][90] = new Car(); road[0][34] = new Car(); road[0][45] = new
+		 * Car(); road[0][50] = new Car(); road[0][52] = new Car(); road[0][11] =
+		 * new Car();
+		 */
     }
 
     public Route(int length, int numLanes) {
         nextRoute = null;
         road = new Object[numLanes][length];
-        for (int j = 0; j < numLanes - 1; j++) {
-            for (int i = 0; i < length - 1; i++) {
+        for (int j = 0; j <= numLanes - 1; j++) {
+            for (int i = 0; i <= length - 1; i++) {
                 road[j][i] = new EmptyVehicle();
             }
         }
@@ -51,50 +52,54 @@ public abstract class Route {
         for (int i = 0; i < 100; i++) {
             road[0][i] = new EmptyVehicle();
         }
-        road[0][90] = new Car();
-        road[0][34] = new Car();
-        road[0][45] = new Car();
-        road[0][50] = new Car();
-        road[0][52] = new Car();
-        road[0][11] = new Car();
-        road[0][22] = new Car();
-        road[0][12] = new Car();
-        road[0][13] = new Car();
-        road[0][1] = new Car();
-        road[0][2] = new Car();
+        /*
+		 * road[0][90] = new Car(); road[0][34] = new Car(); road[0][45] = new
+		 * Car(); road[0][50] = new Car(); road[0][52] = new Car(); road[0][11] =
+		 * new Car(); road[0][22] = new Car(); road[0][12] = new Car();
+		 * road[0][13] = new Car(); road[0][1] = new Car();
+		 */
     }
     /**
 	 * iterates over the road, starts at the end
-	 * 
-	 * TODO make multi-dimensional algorithm
+	 *  
 	 */
     public void update() {
-        for (int i = road[0].length - 1; i > 0; i--) {
-            if (road[0][i] instanceof Car) {
-                getVehicle(0, i).setHandled(false);
+        for (int i = road[0].length - 1; i >= 0; i--) {
+            for (int j = road.length - 1; j >= 0; j--) {
+                if (road[j][i] instanceof Car) {
+                    getVehicle(j, i).setHandled(false);
+                }
             }
         }
         //	System.out.println("entering Route::update");
-        for (int i = road[0].length - 1; i > 0; i--) {
-            if (road[0][i] instanceof Car) {
-                accelerate(0, i);
+        for (int i = road[0].length - 1; i >= 0; i--) {
+            for (int j = road.length - 1; j >= 0; j--) {
+                if (road[j][i] instanceof Car) {
+                    accelerate(j, i);
+                }
             }
         }
-        for (int i = road[0].length - 1; i > 0; i--) {
-            if (road[0][i] instanceof Car) {
-                decelerate(0, i);
+        for (int i = road[0].length - 1; i >= 0; i--) {
+            for (int j = road.length - 1; j >= 0; j--) {
+                if (road[j][i] instanceof Car) {
+                    decelerate(j, i);
+                }
             }
         }
-        for (int i = road[0].length - 1; i > 0; i--) {
-            if (road[0][i] instanceof Car) {
-                stochasticDecelerate(0, i);
+        for (int i = road[0].length - 1; i >= 0; i--) {
+            for (int j = road.length - 1; j >= 0; j--) {
+                if (road[j][i] instanceof Car) {
+                    stochasticDecelerate(j, i);
+                }
             }
         }
-        for (int i = road[0].length - 1; i > 0; i--) {
-            if ((road[0][i] instanceof Car)
-                && (getVehicle(0, i).isHandled() == false)) {
-                getVehicle(0, i).setHandled(true);
-                advance(0, i);
+        for (int i = road[0].length - 1; i >= 0; i--) {
+            for (int j = road.length - 1; j >= 0; j--) {
+                if ((road[j][i] instanceof Car)
+                    && (getVehicle(j, i).isHandled() == false)) {
+                    getVehicle(j, i).setHandled(true);
+                    advance(j, i);
+                }
             }
         }
     }
@@ -133,9 +138,10 @@ public abstract class Route {
 	 */
     protected void accelerate(int x, int y) {
         Vehicle a = getVehicle(x, y);
-        if (a.getVelocity() < a.getMaxVelocity()) {
+        if (a.getVelocity() < Math.min(a.getMaxVelocity(), speedLimit)) {
             a.setVelocity(a.getVelocity() + 1);
         }
+        // if(a.getVe)
     }
 
     /**
@@ -148,7 +154,9 @@ public abstract class Route {
     protected void decelerate(int x, int y) {
         Vehicle a = getVehicle(x, y);
         int gap = gap(x, y + 1);
-        a.setVelocity(gap - 1);
+        if (a.getVelocity() > gap) {
+            a.setVelocity(gap - 1);
+        }
     }
 
     /**
@@ -160,7 +168,8 @@ public abstract class Route {
 	 */
     protected void stochasticDecelerate(int x, int y) {
         Vehicle a = getVehicle(x, y);
-        if ((a.getVelocity() > 0) && (Math.random() <= p_dec)) {
+        Random rand = new Random();
+        if ((a.getVelocity() > 0) && (rand.nextFloat() <= p_dec)) {
             a.setVelocity(a.getVelocity() - 1);
         }
     }
@@ -216,14 +225,14 @@ public abstract class Route {
 	 */
     protected void setVehicle(Vehicle v, int x, int y) {
         if (overflow(x, y) > 0) {
-            System.out.println(overflow(x, y));
+           // System.out.println(overflow(x, y));
             if (hasNextRoute()) {
                 nextRoute.setVehicle(v, x, overflow(x, y));
             }
         } else {
             road[x][y] = v;
-            if (v instanceof Car)
-                System.out.println("set vehicle at " + x + "." + y);
+          //  if (v instanceof Car)
+          //      System.out.println("set vehicle at " + x + "." + y);
         }
 
     }
@@ -231,9 +240,10 @@ public abstract class Route {
 	 * returns the Road
 	 * 
 	 * @return Road
+	 * @deprecated
 	 */
     public Object[][] getList() {
-        return road;
+        return getRoad();
     }
     /**
 	 * returns the amount of fields the current position exceeds the road
@@ -267,4 +277,32 @@ public abstract class Route {
     double getDecelerationRate() {
         return p_dec;
     }
+    /**
+	 * @return Returns the speedLimit.
+	 */
+    public int getSpeedLimit() {
+        return speedLimit;
+    }
+
+    /**
+	 * @param speedLimit The speedLimit to set.
+	 */
+    public void setSpeedLimit(int speedLimit) {
+        this.speedLimit = speedLimit;
+    }
+
+    /**
+	 * @return Returns the nextRoute.
+	 */
+    public Route getNextRoute() {
+        return nextRoute;
+    }
+
+    /**
+	 * @return Returns the road.
+	 */
+    public Object[][] getRoad() {
+        return road;
+    }
+
 }

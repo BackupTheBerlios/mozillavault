@@ -106,6 +106,7 @@ public class Vehicle {
 	 */
 	public Vehicle() {
 		super();
+        color = Color.LIGHT_GRAY ;
 	}
 
 	public boolean isHandled() {

@@ -3,6 +3,8 @@
  */
 package objects;
 
+import java.awt.Color;
+
 /**
  * @author tfranz
  */
@@ -13,7 +15,7 @@ public class EmptyVehicle extends Vehicle {
      */
     public EmptyVehicle() {
         super();
-        // TODO Auto-generated constructor stub
+        color = Color.lightGray ;
     }
 
 }

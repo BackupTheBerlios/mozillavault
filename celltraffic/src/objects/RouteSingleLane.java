@@ -1,26 +1,10 @@
 /*
  * Created on 15.10.2003
- * $Id: RouteSingleLane.java,v 1.5 2003/10/28 18:36:36 moleman Exp $
+ * $Id: RouteSingleLane.java,v 1.6 2003/10/29 05:21:22 moleman Exp $
  */
 package objects;
-/*
-import gui.GraphikPanel;
 
-import java.util.ArrayList;
-import java.util.List;
-*/
-
-/**
- * @author Jonas Sprenger
- *
- * To change the template for this generated type comment go to
- * Window>Preferences>Java>Code Generation>Code and Comments
- */
 public class RouteSingleLane extends Route{
-/*	int laenge;
-	int breite;
-	List list;
-	GraphikPanel gp;*/
 	
     public RouteSingleLane(){
         super();
@@ -28,31 +12,11 @@ public class RouteSingleLane extends Route{
     
 	public RouteSingleLane(int l){
         super(l);
-		//this.laenge = l;
-		//breite = 10;
-		//list = new ArrayList();	
 	}
- /*   
-	public void setGraphikPanel(GraphikPanel gp){
-		this. gp = gp;
-	}
-	public void addPoint(Vehicle a){
-	list.add(a);
-	gp.repaint();
-	
-	}
-	
-	public int getLaenge(){
-		return laenge;
-	}
-	public int getBreite(){
-			return breite;
-		}
-	public boolean produzentBelegt(){
-	//	return istBelegt(0,0);
-        return true;
-				
-	}*/
-	
+    
+    public RouteSingleLane(int length,int numLanes){
+        super(length);
+    }
+ 
 
 }

@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- *$Id: ButtonPanel.java,v 1.9 2003/10/28 21:17:33 moleman Exp $
+ *$Id: ButtonPanel.java,v 1.10 2003/10/29 05:21:22 moleman Exp $
  */
 package gui;
 
@@ -27,10 +27,10 @@ public class ButtonPanel extends JPanel {
 	JButton produzent, weiter;
 	JSlider speed;
 
-	Route w;
+	Route w,x;
 	GraphikPanel gp;
 	GridLayout gridLayout;
-	public ButtonPanel(Route w, GraphikPanel gp) {
+	public ButtonPanel(Route w, Route x, GraphikPanel gp) {
 		gridLayout = new GridLayout(3, 1);
 		this.setLayout(gridLayout);
 
@@ -50,6 +50,7 @@ public class ButtonPanel extends JPanel {
 		this.add(weiter);
 
 		this.w = w;
+        this.x = x;
 		this.gp = gp;
 	}
 
@@ -74,6 +75,7 @@ public class ButtonPanel extends JPanel {
 private class WeiterAction extends AbstractAction {
 	public void actionPerformed(ActionEvent evt) {
 		w.update() ;
+        x.update();
 		gp.repaint();
 
 	}

@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: CellTraffic.java,v 1.10 2003/10/28 21:17:33 moleman Exp $
+ * $Id: CellTraffic.java,v 1.11 2003/10/29 05:21:22 moleman Exp $
  */
 package celltraffic;
 
@@ -16,7 +16,10 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import objects.Drain;
 import objects.RouteCrossLane;
+import objects.RouteSingleLane;
+import objects.Source;
 
 
 /**
@@ -45,15 +48,17 @@ public class CellTraffic {
 
 
         
-        //RouteSingleLane rsl1 = new RouteSingleLane();
-		RouteCrossLane rsl1 = new RouteCrossLane();
+        RouteSingleLane rsl1 = new RouteSingleLane();
+		//RouteCrossLane rsl1 = new RouteCrossLane();
+        Source s = new Source();
+        s.setNextRoute(rsl1);
 		
 		GraphikPanel gp = new GraphikPanel(rsl1);
       //  Source s1= new Source();
-       // Drain d1 = new Drain();
+       Drain d1 = new Drain();
         
-        rsl1.setNextRoute(rsl1);
-       // s1.setNextRoute(d1);
+        rsl1.setNextRoute(d1);
+        s.setNextRoute(rsl1);
         
       /*  for(int i=1; i<50;i++){
          //   s1.update();
@@ -62,7 +67,7 @@ public class CellTraffic {
          //   s1.update();
         }*/
         
-        ButtonPanel buttons = new ButtonPanel(rsl1, gp);
+        ButtonPanel buttons = new ButtonPanel(rsl1, s, gp);
 
         //	panel.add(gp,BorderLayout.WEST);
         //	panel.add(buttons,BorderLayout.EAST);
