@@ -8,13 +8,12 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.util.Random;
 
 /**
  * @author Jonas Sprenger
  *  
  */
-public abstract class Route extends Observable implements ActionListener{
+public abstract class Route extends Observable implements ActionListener {
 	double p_dec = 0.3;
 	/**
 	 * reference to the next route object
@@ -62,21 +61,13 @@ public abstract class Route extends Observable implements ActionListener{
 		for (int i = 0; i < 80; i++) {
 			road[0][i] = new EmptyVehicle();
 		}
-		/*
-		road[0][0] = new Car(); 			
-		   road[0][90] = new Car(); road[0][34] = new Car(); road[0][45] = new
-		 Car(); road[0][50] = new Car(); road[0][52] = new Car(); road[0][11] =
-		  new Car(); road[0][22] = new Car(); road[0][12] = new Car();
-		  road[0][13] = new Car(); road[0][1] = new Car();
-		  */
-		 
+
 	}
 	/**
 	 * iterates over the road, starts at the end
 	 *  
 	 */
 	public void update() {
-		System.out.println("Single lane .......");
 		for (int i = road[0].length - 1; i >= 0; i--) {
 			for (int j = road.length - 1; j >= 0; j--) {
 				if (road[j][i] instanceof Car) {
@@ -120,15 +111,17 @@ public abstract class Route extends Observable implements ActionListener{
 		density();
 		flow();
 		relFlow();
-		avgSpeed();
+
 	}
 
 	/**
 	 * Returns, wether the road piece at the given coordnates is free so that a
 	 * vehicle may move to that coordinates
 	 * 
-	 * @param x x-coordinate of the field to test
-	 * @param y y-coordinate of the field to test
+	 * @param x
+	 *            x-coordinate of the field to test
+	 * @param y
+	 *            y-coordinate of the field to test
 	 * @return true if the field at the coordinate x,y is empty
 	 */
 	public boolean isFree(int x, int y) {
@@ -144,7 +137,8 @@ public abstract class Route extends Observable implements ActionListener{
 	/**
 	 * convenience function. Behaves exactly like the function above.
 	 * 
-	 * @param p coordinates of the field to test
+	 * @param p
+	 *            coordinates of the field to test
 	 * @return true if the field at the coordnate is empty
 	 * @see #isFree(int,int)
 	 */
@@ -167,12 +161,15 @@ public abstract class Route extends Observable implements ActionListener{
 	 * decelerates the given car depending on the gap between the current
 	 * vehicle and the vehicle ahead
 	 * 
-	 * @param x x-coordinate of the vehicle
-	 * @param y y-coordinate of the vehicle
+	 * @param x
+	 *            x-coordinate of the vehicle
+	 * @param y
+	 *            y-coordinate of the vehicle
 	 */
 	protected void decelerate(int x, int y) {
 		Vehicle a = getVehicle(x, y);
-		int gap = gap(x, y + 1);
+		//	int gap = gap(x, y + 1);
+		int gap = gap(x, y);
 		if (a.getVelocity() > gap) {
 			a.setVelocity(gap - 1);
 		}
@@ -181,14 +178,17 @@ public abstract class Route extends Observable implements ActionListener{
 	/**
 	 * Stochastic behavior. Slow down given vehicle with probability _p_dec
 	 * 
-	 * @param x x-coordinate of the vehicle
-	 * @param y y-coordinate of the vehicle
+	 * @param x
+	 *            x-coordinate of the vehicle
+	 * @param y
+	 *            y-coordinate of the vehicle
 	 *  
 	 */
 	protected void stochasticDecelerate(int x, int y) {
 		Vehicle a = getVehicle(x, y);
-		Random rand = new Random();
-		if ((a.getVelocity() > 0) && (rand.nextFloat() <= p_dec)) {
+		//	Random rand = new Random();
+		//	if ((a.getVelocity() > 0) && (rand.nextFloat() <= p_dec)) {
+		if ((a.getVelocity() > 0) && (Math.random() <= p_dec)) {
 			a.setVelocity(a.getVelocity() - 1);
 		}
 	}
@@ -204,7 +204,8 @@ public abstract class Route extends Observable implements ActionListener{
 	 * gets the gap between the vehicle at position p and the vehicle in front
 	 * of it
 	 * 
-	 * @param p position of current vehicle
+	 * @param p
+	 *            position of current vehicle
 	 * @return gap
 	 */
 	protected int getGap(Point p) {
@@ -213,11 +214,12 @@ public abstract class Route extends Observable implements ActionListener{
 
 	protected int gap(int x, int y) {
 		int gap = 0;
-		boolean nextVehicleFound = false;
-		Vehicle a = getVehicle(x, y);
+		//boolean nextVehicleFound = false;
+		//Vehicle a = getVehicle(x, y);
 
-		while (gap < a.getMaxVelocity() + 1) {
-			if (isFree(x, y + gap)) {
+		//while (gap < a.getMaxVelocity() + 1) {
+		while (gap < Math.min(speedLimit, road[0].length)) {
+			if (isFree(x, y + gap + 1)) {
 				gap++;
 			} else {
 				break;
@@ -238,9 +240,12 @@ public abstract class Route extends Observable implements ActionListener{
 	/**
 	 * sets a vehicle at the given position
 	 * 
-	 * @param v vehicle to set
-	 * @param x x-coordinate
-	 * @param y y-coordinate
+	 * @param v
+	 *            vehicle to set
+	 * @param x
+	 *            x-coordinate
+	 * @param y
+	 *            y-coordinate
 	 */
 	protected void setVehicle(Vehicle v, int x, int y) {
 		if (overflow(x, y) > 0) {
@@ -304,7 +309,8 @@ public abstract class Route extends Observable implements ActionListener{
 	}
 
 	/**
-	 * @param speedLimit The speedLimit to set.
+	 * @param speedLimit
+	 *            The speedLimit to set.
 	 */
 	public void setSpeedLimit(int speedLimit) {
 		this.speedLimit = speedLimit;
@@ -352,8 +358,8 @@ public abstract class Route extends Observable implements ActionListener{
 			}
 		}
 
-		setChanged();
-		notifyObservers(new Integer(num));
+		//	setChanged();
+		//	notifyObservers(new Integer(num));
 		return num;
 	}
 
@@ -393,7 +399,7 @@ public abstract class Route extends Observable implements ActionListener{
 		return relFlow;
 	}
 	public void actionPerformed(ActionEvent e) {
-			update();
-			
-		}
+		update();
+
+	}
 }

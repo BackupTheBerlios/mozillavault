@@ -1,6 +1,6 @@
 /*
- * Created on 15.10.2003
- * $Id: CellTraffic.java,v 1.14 2003/10/29 15:41:24 jsprenger Exp $
+ * Created on 15.10.2003 $Id: CellTraffic.java,v 1.14 2003/10/29 15:41:24
+ * jsprenger Exp $
  */
 package celltraffic;
 
@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 
 import objects.Drain;
 import objects.RouteCrossLane;
+import objects.RouteMultiLane;
 import objects.RouteSingleLane;
 import objects.Source;
 
@@ -27,8 +28,78 @@ import objects.Source;
  */
 public class CellTraffic {
 
-	public static void main(String args[]) {
+	public static void runMultiLane() {
+		JFrame frame = new JFrame("Cell Traffic");
+				JPanel panel = new JPanel();
+				GridLayout gridLayout = new GridLayout(1, 2);
+				BorderLayout bl = new BorderLayout();
 
+				RouteMultiLane rsl1 = new RouteMultiLane();
+				Source s = new Source();
+				Drain d = new Drain();
+				s.setNextRoute(rsl1);
+
+				rsl1.setNextRoute(d);
+				s.setNextRoute(rsl1);
+
+				GraphikPanel gp = new GraphikPanel(rsl1);
+				ButtonPanel buttons = new ButtonPanel(rsl1, s, gp);
+				rsl1.addObserver(buttons);
+
+				WeiterAction wa = buttons.getWeiterAction();
+				wa.addActionListener(s);
+				wa.addActionListener(rsl1);
+				wa.addActionListener(d);
+
+				frame.getContentPane().add(BorderLayout.CENTER, gp);
+				frame.getContentPane().add(BorderLayout.SOUTH, buttons);
+				frame.setSize(800, 400);
+				WindowListener l = new WindowAdapter() {
+					public void windowClosing(WindowEvent e) {
+						System.exit(0);
+					}
+				};
+				frame.addWindowListener(l);
+				frame.setVisible(true);
+		
+	}
+
+	public static void runSingleLane() {
+		JFrame frame = new JFrame("Cell Traffic");
+		JPanel panel = new JPanel();
+		GridLayout gridLayout = new GridLayout(1, 2);
+		BorderLayout bl = new BorderLayout();
+
+		RouteSingleLane rsl1 = new RouteSingleLane();
+		Source s = new Source();
+		Drain d = new Drain();
+		s.setNextRoute(rsl1);
+
+		rsl1.setNextRoute(d);
+		s.setNextRoute(rsl1);
+
+		GraphikPanel gp = new GraphikPanel(rsl1);
+		ButtonPanel buttons = new ButtonPanel(rsl1, s, gp);
+		rsl1.addObserver(buttons);
+
+		WeiterAction wa = buttons.getWeiterAction();
+		wa.addActionListener(s);
+		wa.addActionListener(rsl1);
+		wa.addActionListener(d);
+
+		frame.getContentPane().add(BorderLayout.CENTER, gp);
+		frame.getContentPane().add(BorderLayout.SOUTH, buttons);
+		frame.setSize(800, 400);
+		WindowListener l = new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		};
+		frame.addWindowListener(l);
+		frame.setVisible(true);
+	}
+
+	public static void runCrossLane() {
 		JFrame frame = new JFrame("Cell Traffic");
 		JPanel panel = new JPanel();
 		GridLayout gridLayout = new GridLayout(1, 2);
@@ -38,12 +109,10 @@ public class CellTraffic {
 
 		//   s.setGraphikPanel(gp);
 		/*
-		//=======
-		RouteSingleLane s = new RouteSingleLane(300);
-		GraphikPanel gp = new GraphikPanel(s);
-		s.setGraphikPanel(gp);
-		
-		*/
+		 * //======= RouteSingleLane s = new RouteSingleLane(300); GraphikPanel
+		 * gp = new GraphikPanel(s); s.setGraphikPanel(gp);
+		 *  
+		 */
 
 		//RouteSingleLane rsl1 = new RouteSingleLane();
 		RouteCrossLane rsl1 = new RouteCrossLane(1, 1);
@@ -54,31 +123,28 @@ public class CellTraffic {
 		rsl1.setNextRoute(d1);
 		//s.setNextRoute(rsl1);
 
-		/*  for(int i=1; i<50;i++){
-		   //   s1.update();
-		     // rsl1.update();
-		      
-		   //   s1.update();
-		  }*/
+		/*
+		 * for(int i=1; i <50;i++){ // s1.update(); // rsl1.update(); //
+		 * s1.update();
+		 */
 
 		ButtonPanel buttons = new ButtonPanel(rsl1, s, gp);
-		//###################test jonas 
+		//###################test jonas
 		Object lanes[] = rsl1.getLane();
 		WeiterAction wa = buttons.getWeiterAction();
 
-		for (int i = 0; i < lanes.length;i++) {
-			
-			
+		for (int i = 0; i < lanes.length; i++) {
+
 			s = new Source();
 			RouteSingleLane tmpR = (RouteSingleLane) lanes[i];
 			tmpR.setNextRoute(new Drain());
 			s.setNextRoute(tmpR);
 			wa.addActionListener(s);
 			wa.addActionListener(tmpR);
-				
+
 		}
 
-		//		###################test jonas 
+		//		###################test jonas
 		rsl1.addObserver(buttons);
 		//	panel.add(gp,BorderLayout.WEST);
 		//	panel.add(buttons,BorderLayout.EAST);
@@ -97,6 +163,13 @@ public class CellTraffic {
 		frame.addWindowListener(l);
 		//frame.pack();
 		frame.setVisible(true);
+
+	}
+
+	public static void main(String args[]) {
+		runMultiLane();
+		//runSingleLane();
+		//runCrossLane();
 
 	}
 }

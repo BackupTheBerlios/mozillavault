@@ -1,6 +1,6 @@
 /*
  * Created on 23.10.2003
- * $Id: Drain.java,v 1.4 2003/10/29 05:21:22 moleman Exp $
+ * $Id: Drain.java,v 1.5 2003/10/29 17:58:19 moleman Exp $
  */
 package objects;
 
@@ -21,7 +21,7 @@ public class Drain extends Route {
      * 
      */
     public Drain() {
-        super();
+        super(25 , 255 );
     }
     
     public boolean isFree(int x, int y){

@@ -1,13 +1,11 @@
 /*
- * Created on 15.10.2003 $Id: Source.java,v 1.7 2003/10/29 15:41:24 jsprenger Exp $
+ * Created on 15.10.2003 $Id: Source.java,v 1.8 2003/10/29 17:58:19 moleman Exp $
  */
 package objects;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Source extends Route implements ActionListener{
+public class Source extends Route {
 
     int timer = 0;
     int interval = 2;
@@ -22,11 +20,11 @@ public class Source extends Route implements ActionListener{
         timer++;
         if (timer == interval) {
 
-            Random rand = new Random();
-            double rnf = rand.nextFloat();
-            System.out.println(rnf);
+          //  Random rand = new Random();
+          //  double rnf = rand.nextFloat();
+           // System.out.println(rnf);
             if (getVehicle(0, 0) instanceof EmptyVehicle) {
-                if (rnf < p_truck) {
+                if (Math.random()  < p_truck) {
                     Truck v = new Truck();
                     v.setHandled(false);
                     setVehicle(v, 0, 0);
@@ -58,22 +56,5 @@ public class Source extends Route implements ActionListener{
     public void setInterval(int interval) {
         this.interval = interval;
     }
-
-	/* (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	public void actionPerformed(ActionEvent e) {
-		update();
-			
-	}
-
-	/* (non-Javadoc)
-	 * @see java.awt.ActiveEvent#dispatch()
-	 */
-	public void dispatch() {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

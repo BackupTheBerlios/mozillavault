@@ -1,5 +1,4 @@
 /*
- * Created on 29.10.2003
  * $id$
  */
 package objects;
