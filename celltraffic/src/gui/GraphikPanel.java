@@ -1,5 +1,5 @@
 /*
- * $Id: GraphikPanel.java,v 1.14 2003/10/29 19:27:34 jsprenger Exp $
+ * $Id: GraphikPanel.java,v 1.15 2003/10/30 10:36:08 moleman Exp $
  */
 package gui;
 
@@ -29,9 +29,9 @@ public class GraphikPanel extends JPanel {
 	Object list[][];
 	Object routeList[];
 	Route strasse, route;
-	int cellSize = 5;
-	int nullPunktX = 500;
-	int nullPunktY = 250;
+	int cellSize = 10;
+	int nullPunktX = 100;
+	int nullPunktY = 50;
 
 	public GraphikPanel(Route s) {
 		this.strasse = s;
@@ -170,7 +170,7 @@ public class GraphikPanel extends JPanel {
 	}
 
 	void drawCar(Graphics g, int x, int y) {
-		g.setColor(Color.red);
+		g.setColor(Color.black);
 		//System.out.println("zeichnet Vehicle..." + x + "." + y);
 		g.fillRect(x, y, cellSize - 1, cellSize - 1);
 		g.fillRect(
@@ -182,7 +182,7 @@ public class GraphikPanel extends JPanel {
 	}
 	void drawTruck(Graphics g, int x, int y) {
 		//g.setColor(Car.getColor());
-		g.setColor(Color.green);
+		g.setColor(Color.red);
 		//System.out.println("zeichnet Truck..." + x + "." + y);
 		g.fillRect(
 			nullPunktX + x * cellSize,

@@ -1,5 +1,5 @@
 /*
- * Created on 15.10.2003 $Id: Source.java,v 1.9 2003/10/29 19:27:34 jsprenger Exp $
+ * $Id: Source.java,v 1.10 2003/10/30 10:36:08 moleman Exp $
  */
 package objects;
 

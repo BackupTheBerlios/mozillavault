@@ -5,6 +5,7 @@
 package celltraffic;
 
 import gui.ButtonPanel;
+import gui.DiagramPanel;
 import gui.GraphikPanel;
 import gui.ButtonPanel.WeiterAction;
 
@@ -67,8 +68,8 @@ public class CellTraffic {
 	public static void runSingleLane() {
 		JFrame frame = new JFrame("Cell Traffic");
 		JPanel panel = new JPanel();
-		GridLayout gridLayout = new GridLayout(1, 2);
-		BorderLayout bl = new BorderLayout();
+	/*	GridLayout gridLayout = new GridLayout(2, 2);
+		BorderLayout bl = new BorderLayout();*/
 
 		RouteSingleLane rsl1 = new RouteSingleLane();
 		Source s = new Source();
@@ -80,6 +81,7 @@ public class CellTraffic {
 
 		GraphikPanel gp = new GraphikPanel(rsl1);
 		ButtonPanel buttons = new ButtonPanel(rsl1, s, gp);
+        DiagramPanel dgp = new DiagramPanel(rsl1);
 		rsl1.addObserver(buttons);
 
 		WeiterAction wa = buttons.getWeiterAction();
@@ -89,6 +91,7 @@ public class CellTraffic {
 
 		frame.getContentPane().add(BorderLayout.CENTER, gp);
 		frame.getContentPane().add(BorderLayout.SOUTH, buttons);
+        frame.getContentPane().add(BorderLayout.NORTH, dgp);
 		frame.setSize(800, 400);
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -182,8 +185,8 @@ public class CellTraffic {
 
 	public static void main(String args[]) {
 		//runMultiLane();
-		//runSingleLane();
-		runCrossLane();
+		runSingleLane();
+		//runCrossLane();
 
 	}
 }
