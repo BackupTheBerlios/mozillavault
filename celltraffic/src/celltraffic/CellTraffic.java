@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: CellTraffic.java,v 1.8 2003/10/28 18:45:01 moleman Exp $
+ * $Id: CellTraffic.java,v 1.9 2003/10/28 19:49:21 jsprenger Exp $
  */
 package celltraffic;
 
@@ -46,26 +46,14 @@ public class CellTraffic {
         GraphikPanel gp = new GraphikPanel(s);
         s.setGraphikPanel(gp);
 		
-		
-//>>>>>>> 1.7
-		//######################## Test
-		s.road[0][2]= new Car();
-		s.road[0][4]= new Car();
-		s.road[0][10]= new Car();
-				s.road[0][20]= new Car();
-				s.road[0][22]= new Car();
-		s.road[0][2]= new Car();
-				s.road[0][40]= new Car();
-				s.road[0][42]= new Car();
-		gp.setList(s.road);
-		
-		//#######################ENDE Test	
 		*/
 		
 
 
         
-        RouteSingleLane rsl1 = new RouteSingleLane();
+        //RouteSingleLane rsl1 = new RouteSingleLane();
+		RouteCrossLane rsl1 = new RouteCrossLane();
+		
 		GraphikPanel gp = new GraphikPanel(rsl1);
       //  Source s1= new Source();
        // Drain d1 = new Drain();

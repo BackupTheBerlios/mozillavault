@@ -4,7 +4,7 @@
  * jsprenger Exp $
 =======
  * Created on 15.10.2003
- * $Id: GraphikPanel.java,v 1.6 2003/10/28 18:46:48 moleman Exp $
+ * $Id: GraphikPanel.java,v 1.7 2003/10/28 19:49:21 jsprenger Exp $
 >>>>>>> 1.5
  */
 package gui;
@@ -35,7 +35,6 @@ public class GraphikPanel extends JPanel {
 	int nullPunktY = 100;
 
 	public GraphikPanel(Route s) {
-		//this.setBackground(Color.RED);
 		this.strasse = s;
 		list = strasse.getList();
 		super.setBounds(
@@ -46,7 +45,6 @@ public class GraphikPanel extends JPanel {
 
 	}
 	public GraphikPanel() {
-		//super.setBounds(0, 0, 300, 300);
 		list = null;
 
 	}
@@ -87,21 +85,25 @@ public class GraphikPanel extends JPanel {
 
 	void drawCrossLane(Graphics g) {
 		Polygon p = new Polygon();
+int maxX = list[0].length * cellSize + 1;
+int maxY = list.length * cellSize + 1;
+int breite = 10;
+int hoehe = 10;
 
 		p.addPoint(nullPunktX, nullPunktY);
-		p.addPoint(100, 100);
-		p.addPoint(100, 0);
-		p.addPoint(110, 0);
+		p.addPoint(maxX/2, nullPunktY);
+		p.addPoint(maxX/2,nullPunktY-maxY/2);
+		p.addPoint(maxX/2+breite,nullPunktY-maxY/2);
 
-		p.addPoint(110, 100);
-		p.addPoint(210, 100);
-		p.addPoint(210, 110);
-		p.addPoint(110, 110);
+		p.addPoint(maxX/2+breite, nullPunktY);
+		p.addPoint(maxX+breite,nullPunktY);
+		p.addPoint(maxX+breite,nullPunktY+hoehe);
+		p.addPoint(maxX/2+breite, nullPunktY+hoehe);
 
-		p.addPoint(110, 210);
-		p.addPoint(100, 210);
-		p.addPoint(100, 110);
-		p.addPoint(0, 110);
+		p.addPoint(maxX/2+breite,  nullPunktY+hoehe+maxY/2);
+		p.addPoint(maxX/2, nullPunktY+hoehe+maxY/2);
+		p.addPoint(maxX/2, nullPunktY+hoehe);
+		p.addPoint(nullPunktX, nullPunktY+hoehe);
 
 		g.drawPolygon(p);
 
