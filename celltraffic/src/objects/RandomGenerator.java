@@ -18,8 +18,10 @@ public class RandomGenerator {
 	static Random random = new Random();
 	
 	
-		public int getRandom(){
+		public int getRandom3(){
 			return random.nextInt(2);
 		}
-
+	public double getRandom2(){
+				return random.nextDouble();
+			}
 }
