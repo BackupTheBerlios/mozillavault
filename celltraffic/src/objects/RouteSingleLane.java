@@ -1,8 +1,6 @@
 /*
  * Created on 15.10.2003
- *
- * To change the template for this generated file go to
- * Window>Preferences>Java>Code Generation>Code and Comments
+ * $Id: RouteSingleLane.java,v 1.2 2003/10/23 18:00:16 moleman Exp $
  */
 package objects;
 

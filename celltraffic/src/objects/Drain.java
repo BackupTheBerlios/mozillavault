@@ -1,5 +1,6 @@
 /*
  * Created on 23.10.2003
+ * $Id: Drain.java,v 1.2 2003/10/23 18:00:16 moleman Exp $
  */
 package objects;
 
