@@ -1,13 +1,14 @@
 /*
  * Created on 15.10.2003
- * $Id: RouteSingleLane.java,v 1.4 2003/10/26 22:51:56 moleman Exp $
+ * $Id: RouteSingleLane.java,v 1.5 2003/10/28 18:36:36 moleman Exp $
  */
 package objects;
-
+/*
 import gui.GraphikPanel;
 
 import java.util.ArrayList;
 import java.util.List;
+*/
 
 /**
  * @author Jonas Sprenger
@@ -16,10 +17,10 @@ import java.util.List;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class RouteSingleLane extends Route{
-	int laenge;
+/*	int laenge;
 	int breite;
 	List list;
-	GraphikPanel gp;
+	GraphikPanel gp;*/
 	
     public RouteSingleLane(){
         super();
@@ -27,11 +28,11 @@ public class RouteSingleLane extends Route{
     
 	public RouteSingleLane(int l){
         super(l);
-		this.laenge = l;
-		breite = 10;
-		list = new ArrayList();	
+		//this.laenge = l;
+		//breite = 10;
+		//list = new ArrayList();	
 	}
-    
+ /*   
 	public void setGraphikPanel(GraphikPanel gp){
 		this. gp = gp;
 	}
@@ -51,7 +52,7 @@ public class RouteSingleLane extends Route{
 	//	return istBelegt(0,0);
         return true;
 				
-	}
+	}*/
 	
 
 }
