@@ -4,7 +4,7 @@
  * jsprenger Exp $
 =======
  * Created on 15.10.2003
- * $Id: GraphikPanel.java,v 1.10 2003/10/29 10:39:08 jsprenger Exp $
+ * $Id: GraphikPanel.java,v 1.11 2003/10/29 11:25:46 jsprenger Exp $
 >>>>>>> 1.5
  */
 package gui;
@@ -62,127 +62,13 @@ public class GraphikPanel extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		int index = 0;
+		int krH = 0,krB=0; // höhe und greite der Kreuzung
 		route = strasse;
 		list = strasse.getList();
 
 		if (route instanceof RouteCrossLane) {
-			routeList = ((RouteCrossLane) route).getLane();
-			drawCrossLane(g);
-			route = (RouteSingleLane) routeList[index];
-			list = route.getList();
-
-			while (index < routeList.length) {
-				if (route instanceof RouteSingleLane) {
-					int b = list[0].length * cellSize + 1;
-					int h = list.length * cellSize + 1;
-					//left lane
-					if (index == 0) {
-
-						drawRouteSingleLane(
-							g,
-							nullPunktX - b,
-							nullPunktY,
-							b,
-							h);
-						for (int i = list.length - 1; i >= 0; i--) {
-							for (int j = list[i].length - 1; j >= 0; j--) {
-								if (list[i][j] instanceof Car) {
-									drawCar(
-										g,
-										nullPunktX - j * cellSize,
-										nullPunktY + i * cellSize);
-
-								} else {
-									drawRoadElement(
-										g,
-										nullPunktX - j * cellSize,
-										nullPunktY + i * cellSize);
-								}
-							}
-						}
-					}
-					// bottom lane
-					if (index == 1) {
-
-						drawRouteSingleLane(
-							g,
-							nullPunktX + cellSize,
-							nullPunktY,
-							h,
-							b);
-						for (int i = list.length - 1; i >= 0; i--) {
-							for (int j = list[i].length - 1; j >= 0; j--) {
-								if (list[i][j] instanceof Car) {
-									drawCar(
-										g,
-										nullPunktX + cellSize - i * cellSize,
-										nullPunktY + j * cellSize);
-
-								} else {
-									drawRoadElement(
-										g,
-										nullPunktX + cellSize - i * cellSize,
-										nullPunktY + j * cellSize);
-								}
-							}
-						}
-					}
-					//	right lane
-					if (index == 2) {
-
-						drawRouteSingleLane(g, nullPunktX, nullPunktY, b, h);
-						for (int i = list.length - 1; i >= 0; i--) {
-							for (int j = list[i].length - 1; j >= 0; j--) {
-								if (list[i][j] instanceof Car) {
-									drawCar(
-										g,
-										nullPunktX + j * cellSize,
-										nullPunktY + i * cellSize);
-
-								} else {
-									drawRoadElement(
-										g,
-										nullPunktX + j * cellSize,
-										nullPunktY + i * cellSize);
-
-								}
-							}
-						}
-					}
-					// top lane
-					if (index == 3) {
-
-						drawRouteSingleLane(
-							g,
-							nullPunktX + cellSize,
-							nullPunktY - b,
-							h,
-							b);
-						for (int i = list.length - 1; i >= 0; i--) {
-							for (int j = list[i].length - 1; j >= 0; j--) {
-								if (list[i][j] instanceof Car) {
-									drawCar(
-										g,
-										nullPunktX + cellSize + i * cellSize,
-										nullPunktY - j * cellSize);
-
-								} else {
-									drawRoadElement(
-										g,
-										nullPunktX + cellSize + i * cellSize,
-										nullPunktY - j * cellSize);
-
-								}
-							}
-						}
-					}
-				}
-			
-					
-			route = (RouteSingleLane) routeList[index++];
-			list = route.getList();
-			}
-
+			CrossLanePaint clp = new CrossLanePaint(nullPunktX,nullPunktY,route);
+			clp.init(g,this);
 		}
 		else if (strasse instanceof RouteSingleLane) {
 					drawRouteSingleLaneL(g);
@@ -279,7 +165,7 @@ public class GraphikPanel extends JPanel {
 	void drawRoadElement(Graphics g, int x, int y) {
 		//g.setColor(EmptyVehicle.getColor());
 		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(x, y, cellSize - 1, cellSize);
+		g.fillRect(x, y, cellSize -1, cellSize-1);
 	}
 
 }

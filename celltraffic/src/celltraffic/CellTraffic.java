@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: CellTraffic.java,v 1.12 2003/10/29 06:33:45 moleman Exp $
+ * $Id: CellTraffic.java,v 1.13 2003/10/29 11:25:46 jsprenger Exp $
  */
 package celltraffic;
 
@@ -48,8 +48,8 @@ public class CellTraffic {
 
 
         
-        RouteSingleLane rsl1 = new RouteSingleLane();
-		//RouteCrossLane rsl1 = new RouteCrossLane();
+        //RouteSingleLane rsl1 = new RouteSingleLane();
+		RouteCrossLane rsl1 = new RouteCrossLane(1,1);
         Source s = new Source();
         s.setNextRoute(rsl1);
 		
