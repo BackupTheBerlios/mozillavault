@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: CellTraffic.java,v 1.9 2003/10/28 19:49:21 jsprenger Exp $
+ * $Id: CellTraffic.java,v 1.10 2003/10/28 21:17:33 moleman Exp $
  */
 package celltraffic;
 
@@ -12,17 +12,11 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import objects.Car;
-import objects.Drain;
 import objects.RouteCrossLane;
-import objects.RouteSingleLane;
-import objects.Source;
-import objects.Vehicle;
 
 
 /**

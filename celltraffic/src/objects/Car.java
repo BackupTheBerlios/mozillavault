@@ -3,6 +3,8 @@
  */
 package objects;
 
+import java.awt.Color;
+
 /**
  * @author tfranz
  */
@@ -14,6 +16,7 @@ public class Car extends Vehicle {
 	 */
 	public Car() {
 		super();
+        color=Color.BLACK;
 		// TODO Auto-generated constructor stub
 	}
 

@@ -4,7 +4,7 @@
  * jsprenger Exp $
 =======
  * Created on 15.10.2003
- * $Id: GraphikPanel.java,v 1.7 2003/10/28 19:49:21 jsprenger Exp $
+ * $Id: GraphikPanel.java,v 1.8 2003/10/28 21:17:33 moleman Exp $
 >>>>>>> 1.5
  */
 package gui;
@@ -16,6 +16,7 @@ import java.awt.Polygon;
 import javax.swing.JPanel;
 
 import objects.Car;
+import objects.EmptyVehicle;
 import objects.Route;
 import objects.RouteCrossLane;
 import objects.RouteSingleLane;
@@ -122,7 +123,7 @@ int hoehe = 10;
 	}
 
 	void drawCar(Graphics g, int x, int y) {
-		g.setColor(Color.red);
+		g.setColor(Car.getColor());
 		System.out.println("zeichnet Vehicle..." + x + "." + y);
 		g.fillRect(
 			nullPunktX + x * cellSize,
@@ -133,7 +134,7 @@ int hoehe = 10;
 	}
 
 	void drawRoadElement(Graphics g, int x, int y) {
-		g.setColor(Color.LIGHT_GRAY);
+		g.setColor(EmptyVehicle.getColor());
 		//System.out.println("zeichnet Straﬂe..." + i + "." + j);
 		g.fillRect(
 			nullPunktX + x * cellSize,

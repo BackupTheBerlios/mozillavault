@@ -4,6 +4,8 @@
  */
 package objects;
 
+import java.awt.Color;
+
 /**
  * @author Jonas Sprenger
  *  
@@ -21,16 +23,20 @@ public class Vehicle {
 	 */
 	int maxVelocity = 5;
 	boolean handled = false;
-
-	//    /**
-	//     * constructor
-	//	 * @param x
-	//	 * @param y
-	//	 */
-	//    public Vehicle(int x, int y) {
-	//       // this.x = x;
-	//       // this.y = y;
-	//    }
+    static Color color = Color.LIGHT_GRAY ;
+    
+    int direction =0; // 0: forward; 1: left; 2: right 
+    
+    public int getDirection(){
+        return direction;
+    }
+    
+    public void setDirection(int d){
+        direction = d;
+    }
+    
+    
+    
 
 	/**
 	 * @return
@@ -110,4 +116,7 @@ public class Vehicle {
 		handled = h;
 	}
 
+    public static Color getColor(){
+        return color;
+    }
 }
