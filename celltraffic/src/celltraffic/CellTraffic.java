@@ -150,6 +150,8 @@ public class CellTraffic {
 			else{
 				RouteSingleLane tmpR = (RouteSingleLane) lanes[i];
 				tmpR.setNextRoute(new Drain());
+				wa.addActionListener(tmpR);
+				
 										
 			}
 				

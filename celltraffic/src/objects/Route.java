@@ -254,7 +254,9 @@ public abstract class Route extends Observable implements ActionListener {
 			if (hasNextRoute()) {
 				if(nextRoute instanceof RouteCrossLane)
 				{
-					nextRoute.setVehicle(v, 0,0);
+					int index = ((RouteCrossLane)nextRoute).getIndexOfRoute((RouteSingleLane) this);
+					
+					((RouteCrossLane)nextRoute).setVehicle(v,index,x,y);
 				} 
 				else
 				nextRoute.setVehicle(v, x, overflow(x, y));
