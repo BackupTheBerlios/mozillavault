@@ -1,5 +1,5 @@
 /*
- * Created on 15.10.2003 $Id: Route.java,v 1.4 2003/10/25 12:19:54 moleman Exp $
+ * Created on 15.10.2003 $Id: Route.java,v 1.5 2003/10/25 12:41:35 moleman Exp $
  */
 package objects;
 
@@ -161,6 +161,10 @@ public abstract class Route {
 
     protected void setVehicle(Vehicle v, int x, int y) {
         road[x][y] = v;
+    }
+    
+    public Object[][] getList(){
+        return road;
     }
 
 }

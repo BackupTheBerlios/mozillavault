@@ -1,6 +1,6 @@
 /*
  * Created on 23.10.2003
- * $Id: Drain.java,v 1.2 2003/10/23 18:00:16 moleman Exp $
+ * $Id: Drain.java,v 1.3 2003/10/25 12:46:07 moleman Exp $
  */
 package objects;
 
@@ -23,6 +23,10 @@ public class Drain extends Route {
     public Drain() {
         super();
         // TODO Auto-generated constructor stub
+    }
+    
+    public boolean isFree(int x, int y){
+        return true;
     }
 
 }

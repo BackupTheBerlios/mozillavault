@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- *$Id: ButtonPanel.java,v 1.4 2003/10/25 12:38:45 jsprenger Exp $
+ *$Id: ButtonPanel.java,v 1.5 2003/10/25 12:46:25 moleman Exp $
  */
 package gui;
 
@@ -56,10 +56,10 @@ public class ButtonPanel extends JPanel {
 
 	private class ProdAction extends AbstractAction {
 		public void actionPerformed(ActionEvent evt) {
-			if (!w.produzentBelegt()) {
+			//if (!w.produzentBelegt()) {
 				//w.addPoint(new Vehicle(0, 0));
 
-			}
+			//}
 
 		}
 

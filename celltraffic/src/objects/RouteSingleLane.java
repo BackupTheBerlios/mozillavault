@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: RouteSingleLane.java,v 1.2 2003/10/23 18:00:16 moleman Exp $
+ * $Id: RouteSingleLane.java,v 1.3 2003/10/25 12:46:25 moleman Exp $
  */
 package objects;
 
@@ -35,9 +35,7 @@ public class RouteSingleLane extends Route{
 	gp.repaint();
 	
 	}
-	public List getList(){
-		return list;
-	}
+	
 	public int getLaenge(){
 		return laenge;
 	}
