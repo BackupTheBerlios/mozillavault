@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- *$Id: ButtonPanel.java,v 1.6 2003/10/25 13:59:45 jsprenger Exp $
+ *$Id: ButtonPanel.java,v 1.7 2003/10/25 14:41:22 jsprenger Exp $
  */
 package gui;
 
@@ -16,7 +16,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import objects.Route;
-import objects.TrafficTimer;
 import objects.Vehicle;
 
 /**

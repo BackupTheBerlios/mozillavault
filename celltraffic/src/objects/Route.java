@@ -1,5 +1,5 @@
 /*
- * Created on 15.10.2003 $Id: Route.java,v 1.5 2003/10/25 12:41:35 moleman Exp $
+ * Created on 15.10.2003 $Id: Route.java,v 1.6 2003/10/25 14:41:22 jsprenger Exp $
  */
 package objects;
 
@@ -16,7 +16,7 @@ public abstract class Route {
 	 */
     Route nextRoute;
 
-    Object road[][];
+    public Object road[][];
 
     public Route(int length) {
         nextRoute = null;
