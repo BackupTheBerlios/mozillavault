@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: GraphikPanel.java,v 1.4 2003/10/25 14:41:22 jsprenger Exp $
+ * $Id: GraphikPanel.java,v 1.5 2003/10/28 15:48:56 jsprenger Exp $
  */
 package gui;
 
@@ -10,6 +10,7 @@ import java.awt.Polygon;
 
 import javax.swing.JPanel;
 
+import objects.Car;
 import objects.Route;
 import objects.RouteCrossLane;
 import objects.RouteSingleLane;
@@ -31,7 +32,7 @@ public class GraphikPanel extends JPanel {
 
 	}
 	public GraphikPanel() {
-		super.setBounds(0, 0, 300, 300);
+		//super.setBounds(0, 0, 300, 300);
 		list = null;
 
 	}
@@ -80,10 +81,11 @@ public class GraphikPanel extends JPanel {
 		}
 		for (int i = 0; i < list.length; i++) {
 			for (int j = 0; j < list[i].length; j++) {
-				if (list[i][j] instanceof Vehicle) {
+				if (list[i][j] instanceof Car) {
 					g.setColor(Color.red);
-					System.out.println("zeichnet Vehicle...");
-					g.fillRect(nullPunktx + j, nullPunkty+i, 10, 10);
+					
+					//System.out.println("zeichnet Vehicle..."+((Vehicle)list[i][j]).getRandom());
+					g.fillRect(nullPunktx + j, nullPunkty+i, 5, 5);
 					
 				}
 				/*if (list[i][j] instanceof Ampel) {

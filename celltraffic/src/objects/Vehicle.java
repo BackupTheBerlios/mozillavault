@@ -1,8 +1,9 @@
 /*
  * Created on 15.10.2003
- * $Id: Vehicle.java,v 1.3 2003/10/25 12:19:54 moleman Exp $
+ * $Id: Vehicle.java,v 1.4 2003/10/28 15:48:56 jsprenger Exp $
  */
 package objects;
+
 
 /**
  * @author Jonas Sprenger
@@ -10,6 +11,8 @@ package objects;
  */
 public class Vehicle {
    // int x, y;
+  RandomGenerator rg;
+  int random;
     /**
 	 * current velocity of vehicle
 	 */
@@ -18,6 +21,8 @@ public class Vehicle {
 	 * max velocity of vehicle
 	 */
     int maxVelocity = 5;
+    
+	
     
 //    /**
 //     * constructor
@@ -94,5 +99,5 @@ public class Vehicle {
      */
     public Vehicle() {
         super();
-    }
+                 }
 }

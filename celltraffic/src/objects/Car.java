@@ -13,6 +13,7 @@ public class Car extends Vehicle {
      */
     public Car() {
         super();
+        
         // TODO Auto-generated constructor stub
     }
 

@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: CellTraffic.java,v 1.6 2003/10/26 22:51:56 moleman Exp $
+ * $Id: CellTraffic.java,v 1.7 2003/10/28 15:48:56 jsprenger Exp $
  */
 package celltraffic;
 
@@ -12,10 +12,12 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import objects.Car;
 import objects.Drain;
 import objects.RouteCrossLane;
 import objects.RouteSingleLane;
@@ -38,16 +40,18 @@ public class CellTraffic {
         GraphikPanel gp = new GraphikPanel(s);
         s.setGraphikPanel(gp);
 		
+		
 		//######################## Test
-		s.road[0][2]= new Vehicle();
-		s.road[0][4]= new Vehicle();
-		s.road[0][10]= new Vehicle();
-				s.road[0][20]= new Vehicle();
-				s.road[0][22]= new Vehicle();
-		s.road[0][2]= new Vehicle();
-				s.road[0][40]= new Vehicle();
-				s.road[0][42]= new Vehicle();
+		s.road[0][2]= new Car();
+		s.road[0][4]= new Car();
+		s.road[0][10]= new Car();
+				s.road[0][20]= new Car();
+				s.road[0][22]= new Car();
+		s.road[0][2]= new Car();
+				s.road[0][40]= new Car();
+				s.road[0][42]= new Car();
 		gp.setList(s.road);
+		
 		//#######################ENDE Test	
 		
 		
