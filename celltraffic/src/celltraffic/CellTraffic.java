@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: CellTraffic.java,v 1.11 2003/10/29 05:21:22 moleman Exp $
+ * $Id: CellTraffic.java,v 1.12 2003/10/29 06:33:45 moleman Exp $
  */
 package celltraffic;
 
@@ -60,6 +60,8 @@ public class CellTraffic {
         rsl1.setNextRoute(d1);
         s.setNextRoute(rsl1);
         
+    
+        
       /*  for(int i=1; i<50;i++){
          //   s1.update();
            // rsl1.update();
@@ -68,7 +70,7 @@ public class CellTraffic {
         }*/
         
         ButtonPanel buttons = new ButtonPanel(rsl1, s, gp);
-
+        rsl1.addObserver(buttons);
         //	panel.add(gp,BorderLayout.WEST);
         //	panel.add(buttons,BorderLayout.EAST);
        // frame.getContentPane().add(panel);

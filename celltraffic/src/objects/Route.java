@@ -5,13 +5,14 @@
 package objects;
 
 import java.awt.Point;
+import java.util.Observable;
 import java.util.Random;
 
 /**
  * @author Jonas Sprenger
  *  
  */
-public abstract class Route {
+public abstract class Route extends Observable {
     double p_dec = 0.3;
     /**
 	 * reference to the next route object
@@ -21,6 +22,13 @@ public abstract class Route {
     int speedLimit = Integer.MAX_VALUE;
 
     public Object road[][];
+
+    private int relFlow = 0;
+    private int flow = 0;
+    private double density = 0.0;
+    private int numCells = 0;
+    private int NumVehicles = 0;
+    private double avgSpeed = 0.0;
 
     public Route(int length) {
         nextRoute = null;
@@ -102,6 +110,12 @@ public abstract class Route {
                 }
             }
         }
+
+        numVehicles();
+        density();
+        flow();
+        relFlow();
+        avgSpeed();
     }
 
     /**
@@ -225,14 +239,14 @@ public abstract class Route {
 	 */
     protected void setVehicle(Vehicle v, int x, int y) {
         if (overflow(x, y) > 0) {
-           // System.out.println(overflow(x, y));
+            // System.out.println(overflow(x, y));
             if (hasNextRoute()) {
                 nextRoute.setVehicle(v, x, overflow(x, y));
             }
         } else {
             road[x][y] = v;
-          //  if (v instanceof Car)
-          //      System.out.println("set vehicle at " + x + "." + y);
+            //  if (v instanceof Car)
+            //      System.out.println("set vehicle at " + x + "." + y);
         }
 
     }
@@ -303,6 +317,69 @@ public abstract class Route {
 	 */
     public Object[][] getRoad() {
         return road;
+    }
+
+    public double avgSpeed() {
+        int sumSpeed = 0;
+        for (int j = 0; j <= road.length - 1; j++) {
+            for (int i = 0; i <= road[j].length - 1; i++) {
+                if (road[j][i] instanceof Car) {
+                    sumSpeed += getVehicle(j, i).getVelocity();
+                }
+            }
+        }
+        return sumSpeed / numVehicles();
+    }
+
+    public int numVehicles() {
+        int num = 0;
+        for (int j = 0; j <= road.length - 1; j++) {
+            for (int i = 0; i <= road[j].length - 1; i++) {
+                if (road[j][i] instanceof Car) {
+                    num++;
+                }
+            }
+        }
+
+        setChanged();
+        notifyObservers(new Integer(num));
+        return num;
+    }
+
+    public int flow() {
+        int flow = (int) (numVehicles() * avgSpeed());
+        if (flow != this.flow) {
+            setChanged();
+            notifyObservers(new Double(flow));
+        }
+        return flow;
+    }
+
+    public double density() {
+        double density = numVehicles() / numCells();
+        if (density != this.density) {
+            setChanged();
+            notifyObservers(new Double(density));
+        }
+        return density;
+    }
+
+    public int numCells() {
+        int numCells = road.length * road[0].length;
+        if (numCells != this.numCells) {
+            setChanged();
+            notifyObservers(new Integer(numCells));
+        }
+        return numCells;
+    }
+
+    public int relFlow() {
+        int relFlow = (int) (density() * avgSpeed());
+        if (relFlow != this.relFlow) {
+            setChanged();
+            notifyObservers(new Integer(relFlow));
+        }
+        return relFlow;
     }
 
 }
