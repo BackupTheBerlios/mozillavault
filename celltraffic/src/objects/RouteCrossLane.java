@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: RouteCrossLane.java,v 1.4 2003/10/29 10:39:08 jsprenger Exp $
+ * $Id: RouteCrossLane.java,v 1.5 2003/10/29 10:52:13 jsprenger Exp $
  */
 package objects;
 
@@ -23,7 +23,7 @@ public class RouteCrossLane extends Route {
 	 * index 3 = top
 	 */
 	
-	Object nextRoute[] = new Object[4];
+	Object nextRoute[] = new Object[8];
 
 	//TODO Random generator holen 
 	RandomGenerator rg;
@@ -44,6 +44,10 @@ public class RouteCrossLane extends Route {
 		nextRoute[1]= new RouteSingleLane();
 		nextRoute[2]= new RouteSingleLane();
 		nextRoute[3]= new RouteSingleLane();
+		nextRoute[4]= new RouteSingleLane();
+		nextRoute[5]= new RouteSingleLane();
+		nextRoute[6]= new RouteSingleLane();
+		nextRoute[7]= new RouteSingleLane();
 
 	}
 	public void update() {
@@ -64,8 +68,7 @@ public class RouteCrossLane extends Route {
 		Vehicle a = getVehicle(x, y);
 		// go straight if r = 0
 		if (r == 0) {
-
-			if (x == 0 && y == 0) {
+ 			if (x == 0 && y == 0) {
 				setVehicle(new EmptyVehicle(), x, y);
 				setVehicle(a, 1, 0);
 			} else if (x == 1 && y == 0) {
