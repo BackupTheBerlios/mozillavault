@@ -1,5 +1,5 @@
 /*
- * Created on 15.10.2003 $Id: Source.java,v 1.8 2003/10/29 17:58:19 moleman Exp $
+ * Created on 15.10.2003 $Id: Source.java,v 1.9 2003/10/29 19:27:34 jsprenger Exp $
  */
 package objects;
 
@@ -20,20 +20,26 @@ public class Source extends Route {
         timer++;
         if (timer == interval) {
 
+
+            Random rand = new Random();
+            double rnf = rand.nextFloat();
+           // System.out.println(rnf);
+
           //  Random rand = new Random();
           //  double rnf = rand.nextFloat();
            // System.out.println(rnf);
+
             if (getVehicle(0, 0) instanceof EmptyVehicle) {
                 if (Math.random()  < p_truck) {
                     Truck v = new Truck();
                     v.setHandled(false);
                     setVehicle(v, 0, 0);
-                    System.out.println("new Truck created");
+             //       System.out.println("new Truck created");
                 } else {
                     Car v = new Car();
                     v.setHandled(false);
                     setVehicle(v, 0, 0);
-				System.out.println("new car created");
+				//System.out.println("new car created");
                }
             }
 

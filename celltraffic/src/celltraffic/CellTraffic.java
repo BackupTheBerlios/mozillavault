@@ -24,7 +24,7 @@ import objects.RouteSingleLane;
 import objects.Source;
 
 /**
- * @author Jonas Sprenger
+ * @author Jonas Sprenger,Tim Franz
  */
 public class CellTraffic {
 
@@ -115,7 +115,7 @@ public class CellTraffic {
 		 */
 
 		//RouteSingleLane rsl1 = new RouteSingleLane();
-		RouteCrossLane rsl1 = new RouteCrossLane(1, 1);
+		RouteCrossLane rsl1 = new RouteCrossLane(2, 2);
 		GraphikPanel gp = new GraphikPanel(rsl1);
 		//  Source s1= new Source();
 		Drain d1 = new Drain();
@@ -133,14 +133,26 @@ public class CellTraffic {
 		Object lanes[] = rsl1.getLane();
 		WeiterAction wa = buttons.getWeiterAction();
 
-		for (int i = 0; i < lanes.length; i++) {
-
+		wa.addActionListener(rsl1);
+		for (int i = 0; i < lanes.length;i++) {
+			
+			if(i % 2 !=0)
+			{
 			s = new Source();
 			RouteSingleLane tmpR = (RouteSingleLane) lanes[i];
 			tmpR.setNextRoute(new Drain());
 			s.setNextRoute(tmpR);
+			tmpR.setNextRoute(rsl1);
 			wa.addActionListener(s);
 			wa.addActionListener(tmpR);
+
+			}
+			else{
+				RouteSingleLane tmpR = (RouteSingleLane) lanes[i];
+				tmpR.setNextRoute(new Drain());
+										
+			}
+				
 
 		}
 
@@ -154,7 +166,7 @@ public class CellTraffic {
 
 		frame.getContentPane().add(BorderLayout.CENTER, gp);
 		frame.getContentPane().add(BorderLayout.SOUTH, buttons);
-		frame.setSize(800, 400);
+		frame.setSize(800, 500);
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
@@ -167,9 +179,9 @@ public class CellTraffic {
 	}
 
 	public static void main(String args[]) {
-		runMultiLane();
+		//runMultiLane();
 		//runSingleLane();
-		//runCrossLane();
+		runCrossLane();
 
 	}
 }

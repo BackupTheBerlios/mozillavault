@@ -1,5 +1,5 @@
 /*
- * $Id: GraphikPanel.java,v 1.13 2003/10/29 17:58:19 moleman Exp $
+ * $Id: GraphikPanel.java,v 1.14 2003/10/29 19:27:34 jsprenger Exp $
  */
 package gui;
 
@@ -144,18 +144,16 @@ public class GraphikPanel extends JPanel {
 		int hoehe = 10;
 
 		g.setColor(Color.WHITE);
-		//g.fillPolygon(p);
+		//g.fillRect(nullPunktX, nullPunktY, 2*cellSize, 2*cellSize);
+		g.drawRect(nullPunktX, nullPunktY, 2*cellSize, 2*cellSize);
 
-		//g.setColor(this.getBackground());
-		//g.drawPolygon(p);
-
-		g.drawRect(nullPunktX, nullPunktY, 2 * cellSize, 2 * cellSize);
 		//g.fillRect(x, y, w, h);
 		//	System.out.println("zeichnet...StrasseKreuzung");
+
 	}
 
 	void drawRouteSingleLane(Graphics g, int x, int y, int w, int h) {
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.drawRect(x, y, w, h);
 		//g.fillRect(x, y, w, h);
 		//System.out.println("zeichnet...StrasseEinspurig " + x + " " + y);

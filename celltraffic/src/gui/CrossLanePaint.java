@@ -48,7 +48,28 @@ public class CrossLanePaint {
 		int index = 0;
 		routeList = ((RouteCrossLane) route).getLane();
 		gp.drawCrossLane(g);
+		list = route.getList();
+		for (int i = 0; i < list.length; i++) {
+			for (int j = 0; j < list[i].length; j++) {
+				if (list[i][j] instanceof Truck) {
+					gp.drawTruck(
+						g,
+						nullPunktX + j * cellSize,
+						nullPunktY + i * cellSize);
+				} else if (list[i][j] instanceof Car) {
+					gp.drawCar(
+						g,
+					nullPunktX + j * cellSize,
+					nullPunktY + i * cellSize);
 
+				} else {
+					gp.drawRoadElement(
+						g,
+					nullPunktX + j * cellSize,
+					nullPunktY + i * cellSize);
+				}
+			}
+		}
 		//nullPunktX += kr;
 		//nullPunktY += kr;
 
@@ -61,12 +82,7 @@ public class CrossLanePaint {
 
 				//left lane <------
 				if (index == 0) {
-					gp.drawRouteSingleLane(
-						g,
-						nullPunktX - b - kr,
-						nullPunktY,
-						b,
-						h);
+					gp.drawRouteSingleLane(g, nullPunktX - b, nullPunktY, b, h);
 					for (int i = 0; i < list.length; i++) {
 						for (int j = 0; j < list[i].length; j++) {
 							if (list[i][j] instanceof Truck) {
@@ -94,7 +110,7 @@ public class CrossLanePaint {
 
 					gp.drawRouteSingleLane(
 						g,
-						nullPunktX - b - kr,
+						nullPunktX - b,
 						nullPunktY + kr,
 						b,
 						h);
@@ -103,18 +119,18 @@ public class CrossLanePaint {
 							if (list[i][j] instanceof Truck) {
 								gp.drawTruck(
 									g,
-									nullPunktX - b - kr + j * cellSize,
+									nullPunktX - b + j * cellSize,
 									nullPunktY + kr + i * cellSize);
 							} else if (list[i][j] instanceof Car) {
 								gp.drawCar(
 									g,
-									nullPunktX - b - kr + j * cellSize,
+									nullPunktX - b + j * cellSize,
 									nullPunktY + kr + i * cellSize);
 
 							} else {
 								gp.drawRoadElement(
 									g,
-									nullPunktX - b - kr + j * cellSize,
+									nullPunktX - b + j * cellSize,
 									nullPunktY + kr + i * cellSize);
 							}
 						}
@@ -167,19 +183,18 @@ public class CrossLanePaint {
 								gp.drawTruck(
 									g,
 									nullPunktX + kr - i * cellSize,
-									nullPunktY + b + kr * 2 - j * cellSize);
+									nullPunktY + b + kr - j * cellSize);
 							} else if (list[i][j] instanceof Car) {
 								gp.drawCar(
 									g,
 									nullPunktX + kr - i * cellSize,
-									nullPunktY + b + kr * 2 - j * cellSize);
+									nullPunktY + b + kr - j * cellSize);
 
 							} else {
 								gp.drawRoadElement(
 									g,
 									nullPunktX + kr - i * cellSize,
-									nullPunktY + b + kr * 2 - j * cellSize);
-
+									nullPunktY + b + kr - j * cellSize);
 							}
 						}
 					}
@@ -230,18 +245,18 @@ public class CrossLanePaint {
 							if (list[i][j] instanceof Truck) {
 								gp.drawTruck(
 									g,
-									nullPunktX + b + kr * 2 - j * cellSize,
+									nullPunktX + b + kr - j * cellSize,
 									nullPunktY + i * cellSize);
 							} else if (list[i][j] instanceof Car) {
 								gp.drawCar(
 									g,
-									nullPunktX + b + kr * 2 - j * cellSize,
+									nullPunktX + b + kr - j * cellSize,
 									nullPunktY + i * cellSize);
 
 							} else {
 								gp.drawRoadElement(
 									g,
-									nullPunktX + b + kr * 2 - j * cellSize,
+									nullPunktX + b + kr - j * cellSize,
 									nullPunktY + i * cellSize);
 
 							}
@@ -254,7 +269,7 @@ public class CrossLanePaint {
 					gp.drawRouteSingleLane(
 						g,
 						nullPunktX + kr,
-						nullPunktY - b - kr,
+						nullPunktY - b,
 						h,
 						b);
 					for (int i = list.length - 1; i >= 0; i--) {
@@ -283,30 +298,25 @@ public class CrossLanePaint {
 				//				top lane down
 				if (index == 7) {
 
-					gp.drawRouteSingleLane(
-						g,
-						nullPunktX,
-						nullPunktY - b - kr,
-						h,
-						b);
+					gp.drawRouteSingleLane(g, nullPunktX, nullPunktY - b, h, b);
 					for (int i = list.length - 1; i >= 0; i--) {
 						for (int j = list[i].length - 1; j >= 0; j--) {
 							if (list[i][j] instanceof Truck) {
 								gp.drawTruck(
 									g,
 									nullPunktX + i * cellSize,
-									nullPunktY - b - kr + j * cellSize);
+									nullPunktY - b + j * cellSize);
 							} else if (list[i][j] instanceof Car) {
 								gp.drawCar(
 									g,
 									nullPunktX + i * cellSize,
-									nullPunktY - b - kr + j * cellSize);
+									nullPunktY - b + j * cellSize);
 
 							} else {
 								gp.drawRoadElement(
 									g,
 									nullPunktX + i * cellSize,
-									nullPunktY - b - kr + j * cellSize);
+									nullPunktY - b + j * cellSize);
 
 							}
 						}

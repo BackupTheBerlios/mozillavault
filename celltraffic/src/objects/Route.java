@@ -68,6 +68,7 @@ public abstract class Route extends Observable implements ActionListener {
 	 *  
 	 */
 	public void update() {
+
 		for (int i = road[0].length - 1; i >= 0; i--) {
 			for (int j = road.length - 1; j >= 0; j--) {
 				if (road[j][i] instanceof Car) {
@@ -251,6 +252,11 @@ public abstract class Route extends Observable implements ActionListener {
 		if (overflow(x, y) > 0) {
 			// System.out.println(overflow(x, y));
 			if (hasNextRoute()) {
+				if(nextRoute instanceof RouteCrossLane)
+				{
+					nextRoute.setVehicle(v, 0,0);
+				} 
+				else
 				nextRoute.setVehicle(v, x, overflow(x, y));
 			}
 		} else {
