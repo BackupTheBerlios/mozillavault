@@ -1,5 +1,6 @@
 /*
- * Created on 15.10.2003 $Id: Route.java,v 1.6 2003/10/25 14:41:22 jsprenger Exp $
+ * Created on 15.10.2003 $Id: Route.java,v 1.6 2003/10/25 14:41:22 jsprenger
+ * Exp $
  */
 package objects;
 
@@ -21,11 +22,17 @@ public abstract class Route {
     public Route(int length) {
         nextRoute = null;
         road = new Object[1][length];
+        for (int i = 0; i < length-1; i++) {
+            road[0][i] = new EmptyVehicle();
+        }
     }
 
     public Route() {
         nextRoute = null;
         road = new Object[1][100];
+        for (int i = 0; i < 100; i++) {
+            road[0][i] = new EmptyVehicle();
+        }
     }
     /**
 	 * iterates over the road, starts at the end
@@ -33,19 +40,19 @@ public abstract class Route {
 	 * TODO make multi-dimensional algorithm
 	 */
     public void update() {
-        for (int i = road[1].length; i > 0; i--) {
-            if (road[1][i] instanceof Vehicle) {
-                accelerate(1, i);
+        for (int i = road[0].length-1; i > 0; i--) {
+            if (road[0][i] instanceof Vehicle) {
+                accelerate(0, i);
             }
         }
-        for (int i = road[1].length; i > 0; i--) {
-            decelerate(1, i);
+        for (int i = road[0].length-1; i > 0; i--) {
+            decelerate(0,i);
         }
-        for (int i = road[1].length; i > 0; i--) {
-            stochasticDecelerate(1, i);
+        for (int i = road[0].length-1; i > 0; i--) {
+            stochasticDecelerate(0, i);
         }
-        for (int i = road[1].length; i > 0; i--) {
-            advance(1, i);
+        for (int i = road[0].length-1; i > 0; i--) {
+            advance(0, i);
         }
     }
 
@@ -115,18 +122,16 @@ public abstract class Route {
             a.setVelocity(a.getVelocity() - 1);
     }
     /**
-	 * 
 	 * @author tfranz
 	 */
     protected void advance(int x, int y) {
         Vehicle a = getVehicle(x, y);
         if (y + a.getVelocity() > road[x].length) {
-            //TODO advance for position outside current road
-            System.out.println(
-                "TODO: New Position of Vehicle exceeds current road");
+            nextRoute.advance(x, getOverflow(x, y + a.getVelocity()));
         } else {
-            road[x][y + a.getVelocity()] = road[x][y];
-            road[x][y] = new EmptyVehicle();
+
+            setVehicle(a, x, y + a.getVelocity());
+            setVehicle(new EmptyVehicle(), x, y);
         }
         // a.setX(a.getX() + a.getVelocity());
     }
@@ -144,7 +149,7 @@ public abstract class Route {
     protected int getGap(int x, int y) {
         int gap = 0;
         boolean nextVehicleFound = false;
-        while ((y <= road[x].length) && (isFree(x, y))) {
+        while ((y <= road[x].length-1) && (isFree(x, y))) {
             if (road[x][y] instanceof Car) {
                 nextVehicleFound = true;
             }
@@ -158,13 +163,43 @@ public abstract class Route {
     protected Vehicle getVehicle(int x, int y) {
         return (Vehicle)road[x][y];
     }
-
+    /**
+	 * sets a vehicle at the given position
+	 * 
+	 * @param v vehicle to set
+	 * @param x x-coordinate
+	 * @param y y-coordinate
+	 */
     protected void setVehicle(Vehicle v, int x, int y) {
         road[x][y] = v;
     }
-    
-    public Object[][] getList(){
+    /**
+	 * returns the Road
+	 * 
+	 * @return Road
+	 */
+    public Object[][] getList() {
         return road;
+    }
+    /**
+	 * returns the amount of fields the current position exceeds the road
+	 * length
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+    public int getOverflow(int x, int y) {
+        int overflow = y - road[x].length;
+        if (overflow <= 0) {
+            return 0;
+        } else {
+            return overflow;
+        }
+    }
+
+    public void setNextRoute(Route r) {
+        nextRoute = r;
     }
 
 }

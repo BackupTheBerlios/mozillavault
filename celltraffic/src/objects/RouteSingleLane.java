@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: RouteSingleLane.java,v 1.3 2003/10/25 12:46:25 moleman Exp $
+ * $Id: RouteSingleLane.java,v 1.4 2003/10/26 22:51:56 moleman Exp $
  */
 package objects;
 
@@ -21,12 +21,17 @@ public class RouteSingleLane extends Route{
 	List list;
 	GraphikPanel gp;
 	
+    public RouteSingleLane(){
+        super();
+    }
+    
 	public RouteSingleLane(int l){
+        super(l);
 		this.laenge = l;
 		breite = 10;
-		list = new ArrayList();
-		
+		list = new ArrayList();	
 	}
+    
 	public void setGraphikPanel(GraphikPanel gp){
 		this. gp = gp;
 	}
