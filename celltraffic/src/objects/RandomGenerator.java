@@ -21,6 +21,9 @@ public class RandomGenerator {
 		public int getRandom3(){
 			return random.nextInt(2);
 		}
+	public int getRandom(){
+				return random.nextInt();
+			}
 	public double getRandom2(){
 				return random.nextDouble();
 			}

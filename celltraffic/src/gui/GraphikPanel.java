@@ -1,5 +1,5 @@
 /*
- * $Id: GraphikPanel.java,v 1.15 2003/10/30 10:36:08 moleman Exp $
+ * $Id: GraphikPanel.java,v 1.16 2003/10/30 14:16:55 moleman Exp $
  */
 package gui;
 
@@ -29,9 +29,11 @@ public class GraphikPanel extends JPanel {
 	Object list[][];
 	Object routeList[];
 	Route strasse, route;
-	int cellSize = 10;
-	int nullPunktX = 100;
-	int nullPunktY = 50;
+	int cellSize = 5;
+	int nullPunktX = 500;
+	int nullPunktY = 250;
+	int co = 0;
+
 
 	public GraphikPanel(Route s) {
 		this.strasse = s;
@@ -76,13 +78,13 @@ public class GraphikPanel extends JPanel {
 			for (int i = list.length - 1; i >= 0; i--) {
 				for (int j = list[i].length - 1; j >= 0; j--) {
 					if (list[i][j] instanceof Truck) {
-						drawTruck(g, j, i);
+						drawTruckMulti(g, j, i);
 
 					} else if (list[i][j] instanceof Car) {
-						drawCar(g, j, i);
+						drawCarMulti(g, j, i);
 
 					} else {
-						drawRoadElement(g, j, i);
+						drawRoadElementMulti(g, j, i);
 					}
 				}
 			}
@@ -110,7 +112,7 @@ public class GraphikPanel extends JPanel {
 						} else {
 							y = 0;
 						}
-						drawTruck(g, j, y);
+						drawTruckMulti(g, j, y);
 
 					} else if (list[i][j] instanceof Car) {
 						int y;
@@ -119,7 +121,7 @@ public class GraphikPanel extends JPanel {
 						} else {
 							y = 0;
 						}
-						drawCar(g, j, y);
+						drawCarMulti(g, j, y);
 
 					} else {
 						int y;
@@ -128,7 +130,7 @@ public class GraphikPanel extends JPanel {
 						} else {
 							y = 0;
 						}
-						drawRoadElement(g, j, y);
+						drawRoadElementMulti(g, j, y);
 					}
 				}
 			}
@@ -168,37 +170,59 @@ public class GraphikPanel extends JPanel {
 
 		//   System.out.println("zeichnet...StrasseEinspurig");
 	}
+	void drawLigth(Graphics g, int x, int y,boolean status) {
+			if(status)
+			g.setColor(Color.green);
+			else g.setColor(Color.red);
+	
+			g.fillOval(x, y, cellSize - 1, cellSize - 1);
+			
 
+		}
 	void drawCar(Graphics g, int x, int y) {
-		g.setColor(Color.black);
+
+		g.setColor(Color.yellow);
+	
+
+		//g.setColor(Color.black);
 		//System.out.println("zeichnet Vehicle..." + x + "." + y);
+
 		g.fillRect(x, y, cellSize - 1, cellSize - 1);
-		g.fillRect(
-			nullPunktX + x * cellSize,
-			nullPunktY + y * cellSize,
-			cellSize - 1,
-			cellSize - 1);
 
 	}
+	void drawCarMulti(Graphics g, int x, int y) {
+			g.setColor(Color.yellow);
+	
+			g.fillRect(
+				nullPunktX + x * cellSize,
+				nullPunktY + y * cellSize,
+				cellSize - 1,
+				cellSize - 1);
+	
+		}
 	void drawTruck(Graphics g, int x, int y) {
-		//g.setColor(Car.getColor());
-		g.setColor(Color.red);
-		//System.out.println("zeichnet Truck..." + x + "." + y);
-		g.fillRect(
-			nullPunktX + x * cellSize,
-			nullPunktY + y * cellSize,
-			cellSize - 1,
-			cellSize - 1);
-		//g.setColor(Car.getColor());
-		g.setColor(Color.green);
-		//System.out.println("zeichnet Truck..." + x + "." + y);
+
+
+		
+		g.setColor(Color.blue);
 		g.fillRect(x, y, cellSize - 1, cellSize - 1);
 
 	}
+	void drawTruckMulti(Graphics g, int x, int y) {
+			g.setColor(Color.blue);
+			g.fillRect(
+				nullPunktX + x * cellSize,
+				nullPunktY + y * cellSize,
+				cellSize - 1,
+				cellSize - 1);
+			
+			
 
+		}
 	void drawRoadElement(Graphics g, int x, int y) {
 		//g.setColor(EmptyVehicle.getColor());
 		g.setColor(Color.LIGHT_GRAY);
+		//g.setColor(Color.BLACK);
 		g.fillRect(x, y, cellSize - 1, cellSize - 1);
 		g.fillRect(
 			nullPunktX + x * cellSize,
@@ -206,7 +230,16 @@ public class GraphikPanel extends JPanel {
 			cellSize - 1,
 			cellSize - 1);
 	}
-
+	void drawRoadElementMulti(Graphics g, int x, int y) {
+			//g.setColor(EmptyVehicle.getColor());
+			g.setColor(Color.LIGHT_GRAY);
+			//g.setColor(Color.BLACK);
+			g.fillRect(
+				nullPunktX + x * cellSize,
+				nullPunktY + y * cellSize,
+				cellSize - 1,
+				cellSize - 1);
+		}
 	void drawRouteMultiLaneL(Graphics g) {
 		g.drawRect(
 			nullPunktX - 1,

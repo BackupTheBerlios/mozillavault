@@ -5,17 +5,21 @@
 package celltraffic;
 
 import gui.ButtonPanel;
-import gui.DiagramPanel;
 import gui.GraphikPanel;
 import gui.ButtonPanel.WeiterAction;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.AbstractAction;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import objects.Drain;
@@ -68,8 +72,8 @@ public class CellTraffic {
 	public static void runSingleLane() {
 		JFrame frame = new JFrame("Cell Traffic");
 		JPanel panel = new JPanel();
-	/*	GridLayout gridLayout = new GridLayout(2, 2);
-		BorderLayout bl = new BorderLayout();*/
+		GridLayout gridLayout = new GridLayout(1, 2);
+		BorderLayout bl = new BorderLayout();
 
 		RouteSingleLane rsl1 = new RouteSingleLane();
 		Source s = new Source();
@@ -81,7 +85,6 @@ public class CellTraffic {
 
 		GraphikPanel gp = new GraphikPanel(rsl1);
 		ButtonPanel buttons = new ButtonPanel(rsl1, s, gp);
-        DiagramPanel dgp = new DiagramPanel(rsl1);
 		rsl1.addObserver(buttons);
 
 		WeiterAction wa = buttons.getWeiterAction();
@@ -91,7 +94,6 @@ public class CellTraffic {
 
 		frame.getContentPane().add(BorderLayout.CENTER, gp);
 		frame.getContentPane().add(BorderLayout.SOUTH, buttons);
-        frame.getContentPane().add(BorderLayout.NORTH, dgp);
 		frame.setSize(800, 400);
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -182,10 +184,49 @@ public class CellTraffic {
 		frame.setVisible(true);
 
 	}
+	public class ComboAction extends AbstractAction {
+		
+			public void actionPerformed(ActionEvent e) {
+			JComboBox cb = (JComboBox)e.getSource();
+			String Name = (String)cb.getSelectedItem();
+			
+			if(Name.equals("SingleLane"))
+			runSingleLane();
+			else if(Name.equals("MultiLane"))
+			runMultiLane();
+			else if(Name.equals("CrossLane"))
+			runCrossLane();
+		}
+
+					}
 
 	public static void main(String args[]) {
+		JFrame frame = new JFrame("CellTraffic");
+		JPanel panel = new JPanel();
+		
+			
+		
+		String[] Strings = { "SingleLane", "MultiLane", "CrossLane"};
+		JComboBox box = new JComboBox(Strings);
+		CellTraffic ct = new CellTraffic();
+		box.addActionListener(ct.new ComboAction());
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 2));
+		panel.add(new JLabel("Welcome, please chose...."));
+		panel.add(box,"North");
+		frame.getContentPane().add(panel);
+		frame.setLocation(100, 100);
+		frame.setSize(200, 200);
+						WindowListener l = new WindowAdapter() {
+							public void windowClosing(WindowEvent e) {
+								System.exit(0);
+							}
+						};
+		frame.addWindowListener(l);
+		frame.setVisible(true);
+		
+		
 		//runMultiLane();
-		runSingleLane();
+		//runSingleLane();
 		//runCrossLane();
 
 	}

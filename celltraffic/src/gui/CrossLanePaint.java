@@ -45,6 +45,7 @@ public class CrossLanePaint {
 
 	}
 	public void init(Graphics g, GraphikPanel gp) {
+		boolean status = false;
 		int index = 0;
 		routeList = ((RouteCrossLane) route).getLane();
 		gp.drawCrossLane(g);
@@ -59,19 +60,43 @@ public class CrossLanePaint {
 				} else if (list[i][j] instanceof Car) {
 					gp.drawCar(
 						g,
-					nullPunktX + j * cellSize,
-					nullPunktY + i * cellSize);
+						nullPunktX + j * cellSize,
+						nullPunktY + i * cellSize);
 
 				} else {
 					gp.drawRoadElement(
 						g,
-					nullPunktX + j * cellSize,
-					nullPunktY + i * cellSize);
+						nullPunktX + j * cellSize,
+						nullPunktY + i * cellSize);
+
 				}
 			}
 		}
-		//nullPunktX += kr;
-		//nullPunktY += kr;
+// paint ligths .....
+  
+		gp.drawLigth(
+			g,
+			nullPunktX - 3 * cellSize,
+			nullPunktY - 3 * cellSize,
+		((RouteCrossLane) route).getAmpel());
+
+		gp.drawLigth(
+			g,
+			nullPunktX - 3 * cellSize,
+			nullPunktY + 4 * cellSize,
+		!((RouteCrossLane) route).getAmpel());
+		gp.drawLigth(
+			g,
+			nullPunktX + 5 * cellSize,
+			nullPunktY + 4 * cellSize,
+		((RouteCrossLane) route).getAmpel());
+
+		gp.drawLigth(
+			g,
+			nullPunktX + 5 * cellSize,
+			nullPunktY - 3 * cellSize,
+		!((RouteCrossLane) route).getAmpel());
+// end of paint lights 
 
 		while (index < routeList.length) {
 			route = (RouteSingleLane) routeList[index];
