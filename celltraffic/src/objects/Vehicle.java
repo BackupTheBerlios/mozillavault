@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: Vehicle.java,v 1.2 2003/10/23 18:00:16 moleman Exp $
+ * $Id: Vehicle.java,v 1.3 2003/10/25 12:19:54 moleman Exp $
  */
 package objects;
 
@@ -61,9 +61,10 @@ public class Vehicle {
 	 * @param v
 	 */
     public void setVelocity(int v) {
-        if ((velocity != v) && (v <= maxVelocity)) {
-            velocity = v;
-        }
+        if (velocity != v) {
+            velocity = Math.min(v, maxVelocity);
+        } 
+        
     }
     
     /**
