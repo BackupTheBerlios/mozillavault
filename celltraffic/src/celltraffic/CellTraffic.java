@@ -17,7 +17,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import objekte.StrasseEinspurig;
+import objects.RouteSingleLane;
 
 /**
  * @author Jonas Sprenger
@@ -29,7 +29,7 @@ public class CellTraffic {
         JFrame frame = new JFrame("Cell Traffic");
         JPanel panel = new JPanel();
         GridLayout gridLayout = new GridLayout(1, 2);
-        StrasseEinspurig s = new StrasseEinspurig(300);
+        RouteSingleLane s = new RouteSingleLane(300);
         GraphikPanel gp = new GraphikPanel(s);
         s.setGraphikPanel(gp);
 

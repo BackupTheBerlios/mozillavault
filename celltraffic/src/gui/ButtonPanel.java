@@ -14,8 +14,8 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import objekte.Auto;
-import objekte.StrasseEinspurig;
+import objects.Vehicle;
+import objects.RouteSingleLane;
 
 /**
  * @author Jonas Sprenger
@@ -26,10 +26,10 @@ import objekte.StrasseEinspurig;
 public class ButtonPanel extends JPanel {
 	JButton produzent,weiter;
 	
-	StrasseEinspurig w;
+	RouteSingleLane w;
 	GraphikPanel gp;
 	GridLayout gridLayout;
-	public ButtonPanel(StrasseEinspurig w, GraphikPanel gp) {
+	public ButtonPanel(RouteSingleLane w, GraphikPanel gp) {
 		gridLayout = new GridLayout(2, 1);	
 		this.setLayout(gridLayout);
 		produzent = new JButton("produzieren");
@@ -48,7 +48,7 @@ public class ButtonPanel extends JPanel {
 		public void actionPerformed(ActionEvent evt) {
 			if (!w.produzentBelegt()) {
 				System.out.println("neues Object erzeugt...");
-				w.addPoint(new Auto(0, 0));
+				//w.addPoint(new Vehicle(0, 0));
 
 			}
 
@@ -62,8 +62,8 @@ public class ButtonPanel extends JPanel {
 			List l = w.getList();
 			for (int i = 0; i < l.size(); i++) {
 				{
-					Auto a = (Auto) l.get(i);
-					a.setX(a.getX()+10);
+					Vehicle a = (Vehicle) l.get(i);
+					//a.setX(a.getX()+10);
 					gp.repaint();
 				}
 

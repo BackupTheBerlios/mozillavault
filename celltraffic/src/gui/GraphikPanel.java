@@ -1,5 +1,6 @@
 /*
  * Created on 15.10.2003
+ * $Id: GraphikPanel.java,v 1.2 2003/10/23 17:58:19 moleman Exp $
  */
 package gui;
 
@@ -11,8 +12,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import objekte.Auto;
-import objekte.StrasseEinspurig;
+import objects.Vehicle;
+import objects.RouteSingleLane;
 
 /**
  * @author Jonas Sprenger
@@ -21,9 +22,9 @@ import objekte.StrasseEinspurig;
 public class GraphikPanel extends JPanel {
     Canvas canvas;
     List list;
-    StrasseEinspurig strasse;
+    RouteSingleLane strasse;
 
-    public GraphikPanel(StrasseEinspurig s) {
+    public GraphikPanel(RouteSingleLane s) {
         this.strasse = s;
         list = strasse.getList();
 
@@ -45,13 +46,13 @@ public class GraphikPanel extends JPanel {
         g.setColor(Color.black);
         System.out.println("zeichnet...");
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(
-                "neues Objekt gezeichnet..." + ((Auto)list.get(i)).getX());
-            g.fillRect(
-                ((Auto)list.get(i)).getX(),
-                ((Auto)list.get(i)).getY(),
+        //    System.out.println(
+       //         "neues Objekt gezeichnet..." + ((Vehicle)list.get(i)).getX());
+          /*  g.fillRect(
+                ((Vehicle)list.get(i)).getX(),
+                ((Vehicle)list.get(i)).getY(),
                 10,
-                10);
+                10);*/
         }
 
     }

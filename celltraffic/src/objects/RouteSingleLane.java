@@ -4,7 +4,7 @@
  * To change the template for this generated file go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-package objekte;
+package objects;
 
 import gui.GraphikPanel;
 
@@ -17,13 +17,13 @@ import java.util.List;
  * To change the template for this generated type comment go to
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
-public class StrasseEinspurig extends VerkehrsWeg{
+public class RouteSingleLane extends Route{
 	int laenge;
 	int breite;
 	List list;
 	GraphikPanel gp;
 	
-	public StrasseEinspurig(int l){
+	public RouteSingleLane(int l){
 		this.laenge = l;
 		breite = 10;
 		list = new ArrayList();
@@ -32,7 +32,7 @@ public class StrasseEinspurig extends VerkehrsWeg{
 	public void setGraphikPanel(GraphikPanel gp){
 		this. gp = gp;
 	}
-	public void addPoint(Auto a){
+	public void addPoint(Vehicle a){
 	list.add(a);
 	gp.repaint();
 	
@@ -47,19 +47,10 @@ public class StrasseEinspurig extends VerkehrsWeg{
 			return breite;
 		}
 	public boolean produzentBelegt(){
-		return istBelegt(0,0);
+	//	return istBelegt(0,0);
+        return true;
 				
 	}
 	
-	public boolean istBelegt(int x,int y){
-		for(int i=0;i<list.size();i++){
-			Auto a = (Auto)list.get(i);
-			if(x==a.getX()&& y == a.getY())
-				{
-				 return true;
-				 } 		
-		}
-		
-		return false;}
 
 }
