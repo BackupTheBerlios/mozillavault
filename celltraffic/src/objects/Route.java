@@ -423,7 +423,16 @@ public abstract class Route extends Observable implements ActionListener {
 			return relFlow;
 		}
 		public void actionPerformed(ActionEvent e) {
-			update();
+            if(e.getID() == 1234){
+			update();}
+            else if(e.getID() == 1237){
+                p_dec = Double.parseDouble( e.getActionCommand()) /100.00;
+                System.out.println(p_dec);
+            }else if(e.getID() == 1238){
+            speedLimit = Integer.parseInt( e.getActionCommand()) ;
+            System.out.println(speedLimit);
+        }
+            
 
 		}
 	}

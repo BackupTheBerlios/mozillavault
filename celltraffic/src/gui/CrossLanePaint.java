@@ -6,21 +6,13 @@
  */
 package gui;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Polygon;
-import java.awt.Rectangle;
-
-import javax.swing.JPanel;
 
 import objects.Car;
-import objects.EmptyVehicle;
 import objects.Route;
 import objects.RouteCrossLane;
 import objects.RouteSingleLane;
 import objects.Truck;
-import objects.Vehicle;
-import objects.Car;
 
 /**
  * @author Jonas Sprenger

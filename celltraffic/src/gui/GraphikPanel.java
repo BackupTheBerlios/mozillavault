@@ -1,5 +1,5 @@
 /*
- * $Id: GraphikPanel.java,v 1.18 2003/10/30 19:53:30 moleman Exp $
+ * $Id: GraphikPanel.java,v 1.19 2003/10/31 01:56:47 moleman Exp $
  */
 package gui;
 
@@ -28,7 +28,7 @@ public class GraphikPanel extends JPanel {
     int cellSize = 5;
     int nullPunktX = 500; //offset for cross lane
     int nullPunktY = 250; //offset for cross lane
-    int offsetX = 50; //offset for standard lane
+    int offsetX = 10; //offset for standard lane
     int offsetY = 100; //offset for standard lane
     int co = 0;
 
@@ -139,7 +139,7 @@ public class GraphikPanel extends JPanel {
     }
     void drawCar(Graphics g, int x, int y) {
         g.setColor(Color.yellow);
-        g.fillRect(x, y, cellSize - 1, cellSize - 1)
+        g.fillRect(x, y, cellSize - 1, cellSize - 1);
     }
 
     void drawShadedVehicle(Graphics g, int x, int y, Color c) {

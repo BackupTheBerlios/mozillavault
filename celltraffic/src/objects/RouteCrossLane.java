@@ -1,13 +1,11 @@
 /*
  * Created on 15.10.2003
- * $Id: RouteCrossLane.java,v 1.10 2003/10/30 17:35:55 moleman Exp $
+ * $Id: RouteCrossLane.java,v 1.11 2003/10/31 01:56:47 moleman Exp $
  */
 package objects;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * @author Jonas Sprenger

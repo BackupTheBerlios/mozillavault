@@ -30,145 +30,374 @@ import objects.Route;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class ButtonPanel extends JPanel implements Observer {
-	JButton /* produzent, */
-	weiter,speedBtn;
-	JSlider speed;
-    
-	JLabel l_numVehicles;
+    JButton weiter;
+    JButton speedBtn;
+    JSlider speed;
+    JSlider sl_outputRate;
+    JSlider sl_pTruck;
+    JSlider sl_pBrake;
+    JSlider sl_roadMaxSpeed;
 
-	Route w, x;
-	GraphikPanel gp;
-	GridLayout gridLayout;
-	WeiterAction wa;
-	CelltrafficTask ctt;
-	
-	
-	public ButtonPanel(Route w, Route x, GraphikPanel gp) {
+    JLabel l_numVehicles;
 
-		ctt = new CelltrafficTask();
-		setTimer(5);
-		gridLayout = new GridLayout(3, 2);
-		this.setLayout(gridLayout);
-		l_numVehicles = new JLabel("numVehicles");
-		this.add(l_numVehicles);
-		JPanel p = new JPanel();
-		speed = new JSlider(1, 20, 5);
-		speed.addChangeListener(new SpeedAction());
-		speedBtn = new JButton("Stop");
-		speedBtn.addActionListener(new speedBtnAction());
-		p.add(new JLabel("speed"));
-		p.add(speed);
-		p.add(speedBtn);
-		this.add(p);
-		/*
+    Route w;
+    Route x;
+    GraphikPanel gp;
+    GridLayout gridLayout;
+    WeiterAction wa;
+    CelltrafficTask ctt;
+    OutputrateAction orAction;
+    TruckrateAction trAction;
+    BrakeAction brAction;
+    RoadMaxSpeedAction msAction;
+
+    public ButtonPanel(Route w, Route x, GraphikPanel gp) {
+      //  setSize(200,300);
+        ctt = new CelltrafficTask();
+        setTimer(5);
+        gridLayout = new GridLayout(3, 3);
+        this.setLayout(gridLayout);
+        l_numVehicles = new JLabel("numVehicles");
+       // this.add(l_numVehicles);
+        JPanel p = new JPanel();
+        speed = new JSlider(1, 20, 5);
+        speed.addChangeListener(new SpeedAction());
+
+        sl_outputRate = new JSlider(1, 10);
+        sl_outputRate.addChangeListener(new OutputrateListener());
+        
+        sl_pTruck = new JSlider(0,100);
+        sl_pTruck.addChangeListener( new TruckrateListener());
+        
+        sl_pBrake = new JSlider(0,100);
+        sl_pBrake.addChangeListener( new BrakeListener());
+        
+        sl_roadMaxSpeed = new JSlider(0,5);
+               sl_roadMaxSpeed.addChangeListener( new RoadMaxSpeedListener());
+
+        speedBtn = new JButton("Stop");
+        speedBtn.addActionListener(new speedBtnAction());
+        p.add(new JLabel("simulation speed"));
+        p.add(speed);
+
+        p.add(new JLabel("vehicle production rate"));
+        p.add(sl_outputRate);
+        
+        p.add(new JLabel("truck rate"));
+        p.add(sl_pTruck);
+        
+        p.add(new JLabel("brake probability"));
+        p.add(sl_pBrake);
+        
+        p.add(new JLabel("global max speed"));
+                p.add(sl_roadMaxSpeed);
+        
+        p.add(new JLabel());
+        p.add(speedBtn);
+       
+        /*
 		 * produzent = new JButton("produzieren");
 		 * produzent.addActionListener(new ProdAction());
 		 */
 
-		weiter = new JButton("weiter");
-		wa = new WeiterAction();
+        weiter = new JButton("weiter");
+        wa = new WeiterAction();
+        orAction = new OutputrateAction();
+        trAction = new TruckrateAction();
+        brAction = new BrakeAction();
+        msAction = new RoadMaxSpeedAction();
 
-		weiter.addActionListener(wa);
-		this.add(weiter);
+        weiter.addActionListener(wa);
+        p.add(new JLabel());
+        p.add(weiter);
+        this.add(p);
+      
+        this.w = w;
+        this.x = x;
+        this.gp = gp;
 
-		this.w = w;
-		this.x = x;
-		this.gp = gp;
-	}
-	public WeiterAction getWeiterAction() {
-		return wa;
-	}
-	public void update(Observable o, Object obj) {
-		l_numVehicles.setText(obj.toString());
-		//System.out.println( name + " lacht über \"" + obj + "\"" );
-	}
+    }
+    public WeiterAction getWeiterAction() {
+        return wa;
+    }
 
-	/*
-	 * private class ProdAction extends AbstractAction { public void
-	 * actionPerformed(ActionEvent evt) { //if (!w.produzentBelegt()) {
-	 * //w.addPoint(new Vehicle(0, 0));
-	 * 
-	 * //} }
-	 *  
-	 */
-	private class SpeedAction implements ChangeListener {
-		int value = 0;
-		public void stateChanged(ChangeEvent e) {
-			int value = ((JSlider) e.getSource()).getValue();
-			if (value != this.value) {
-				//System.out.println("Neuer Wert: " + value);
-				
-				ctt.cancel();
-				ctt = new CelltrafficTask();
-				setTimer(value);
-			}
+    public OutputrateAction getOutputrateAction() {
+        return orAction;
+    }
+    
+    public TruckrateAction getTruckrateAction() {
+           return trAction;
+       }
+    
+    public BrakeAction getBrakeAction() {
+              return brAction;
+          }
+    
+    public RoadMaxSpeedAction getRoadMaxSpeedAction(){
+        return msAction;
+    }
 
-		}
-	}
-	public class speedBtnAction extends AbstractAction {
-			public void actionPerformed(ActionEvent evt) {
-				System.out.println(evt.getActionCommand());
-			if(evt.getActionCommand().equals("Start"))
-			{	speedBtn.setText("Stop");
-				ctt = new CelltrafficTask();
-				setTimer(speed.getValue());
-				
-			}
-			else{
-				ctt.cancel();
-				speedBtn.setText("Start");
-				
-				}
-			}
-		
+    public void update(Observable o, Object obj) {
+        l_numVehicles.setText(obj.toString());
+        //System.out.println( name + " lacht über \"" + obj + "\"" );
+    }
 
-		}
-	public class WeiterAction extends AbstractAction {
-		public void actionPerformed(ActionEvent evt) {
-			// w.update();
-			//x.update();
-			//while(true){
-			fireActionPerformed();
-			gp.repaint();
+    private class SpeedAction implements ChangeListener {
+        int value = 0;
+        public void stateChanged(ChangeEvent e) {
+            int value = ((JSlider)e.getSource()).getValue();
+            if (value != this.value) {
+                //System.out.println("Neuer Wert: " + value);
 
-			//}
-		}
-		Vector listeners = new Vector();
-		public void addActionListener(ActionListener l) {
-			listeners.add(l);
-		}
-		public void removeActionListener(ActionListener l) {
-			listeners.remove(l);
-		}
-		void fireActionPerformed() {
-			if (listeners.size() == 0)
-				return;
-			ActionEvent e = new ActionEvent(this, 1234, "updated");
+                ctt.cancel();
+                ctt = new CelltrafficTask();
+                setTimer(value);
+            }
 
-			ActionListener l;
-			for (int i = 0; i < listeners.size(); i++) {
-				l = (ActionListener) listeners.get(i);
-				l.actionPerformed(e);
-			}
-		}
+        }
+    }
 
-	}
+    public class OutputrateListener implements ChangeListener {
 
-	class CelltrafficTask extends TimerTask {
-		public void run() {
-			// TODO int setzen
-			wa.fireActionPerformed();
-			gp.repaint();
-			
-			}
-	}
+        int value = 0;
 
-	public void setTimer(int i) {
-		Timer timer = new Timer();
-		int interval =70 * (21 - i);
-		timer.schedule(ctt, 0, interval);	
-		
+        public void stateChanged(ChangeEvent e) {
+            int value = ((JSlider)e.getSource()).getValue();
+            if (value != this.value) {       
+                orAction.fireActionPerformed(value);
+            }
 
-	}
+        }
+
+    }
+    
+    public class BrakeListener implements ChangeListener {
+
+           int value = 0;
+
+           public void stateChanged(ChangeEvent e) {
+               int value = ((JSlider)e.getSource()).getValue();
+               if (value != this.value) {       
+                   brAction.fireActionPerformed(value);
+               }
+
+           }
+
+       }
+    
+    public class RoadMaxSpeedListener implements ChangeListener {
+
+              int value = 0;
+
+              public void stateChanged(ChangeEvent e) {
+                  int value = ((JSlider)e.getSource()).getValue();
+                  if (value != this.value) {       
+                      msAction.fireActionPerformed(value);
+                  }
+
+              }
+
+          }
+    
+    public class TruckrateListener implements ChangeListener {
+
+            int value = 0;
+
+            public void stateChanged(ChangeEvent e) {
+                int value = ((JSlider)e.getSource()).getValue();
+                if (value != this.value) {
+                    trAction.fireActionPerformed(value);
+                }
+
+            }
+
+        }
+    
+    
+    
+
+    public class OutputrateAction extends AbstractAction {
+        Vector listeners = new Vector();
+
+        public void addActionListener(ActionListener l) {
+            listeners.add(l);
+        }
+
+        public void removeActionListener(ActionListener l) {
+            listeners.remove(l);
+        }
+
+        public void actionPerformed(ActionEvent evt) {
+            fireActionPerformed(Integer.parseInt( evt.getActionCommand() ));
+        }
+
+        void fireActionPerformed(int j) {
+            if (listeners.size() == 0)
+                return;
+            ActionEvent e = new ActionEvent(this, 1235, Integer.toString(j));
+
+            ActionListener l;
+            for (int i = 0; i < listeners.size(); i++) {
+                l = (ActionListener)listeners.get(i);
+                l.actionPerformed(e);
+            }
+        }
+
+    }
+    
+    public class RoadMaxSpeedAction extends AbstractAction {
+            Vector listeners = new Vector();
+
+            public void addActionListener(ActionListener l) {
+                listeners.add(l);
+            }
+
+            public void removeActionListener(ActionListener l) {
+                listeners.remove(l);
+            }
+
+            public void actionPerformed(ActionEvent evt) {
+                fireActionPerformed(Integer.parseInt( evt.getActionCommand() ));
+            }
+
+            void fireActionPerformed(int j) {
+                if (listeners.size() == 0)
+                    return;
+                ActionEvent e = new ActionEvent(this, 1238, Integer.toString(j));
+
+                ActionListener l;
+                for (int i = 0; i < listeners.size(); i++) {
+                    l = (ActionListener)listeners.get(i);
+                    l.actionPerformed(e);
+                }
+            }
+
+        }
+    
+    public class TruckrateAction extends AbstractAction {
+           Vector listeners = new Vector();
+
+           public void addActionListener(ActionListener l) {
+               listeners.add(l);
+           }
+
+           public void removeActionListener(ActionListener l) {
+               listeners.remove(l);
+           }
+
+           public void actionPerformed(ActionEvent evt) {
+               fireActionPerformed(Integer.parseInt( evt.getActionCommand() ));
+           }
+
+           void fireActionPerformed(int j) {
+               if (listeners.size() == 0)
+                   return;
+               ActionEvent e = new ActionEvent(this, 1236, Integer.toString(j));
+
+               ActionListener l;
+               for (int i = 0; i < listeners.size(); i++) {
+                   l = (ActionListener)listeners.get(i);
+                   l.actionPerformed(e);
+               }
+           }
+
+       }
+    
+    
+    public class BrakeAction extends AbstractAction {
+               Vector listeners = new Vector();
+
+               public void addActionListener(ActionListener l) {
+                   listeners.add(l);
+               }
+
+               public void removeActionListener(ActionListener l) {
+                   listeners.remove(l);
+               }
+
+               public void actionPerformed(ActionEvent evt) {
+                   fireActionPerformed(Integer.parseInt( evt.getActionCommand() ));
+               }
+
+               void fireActionPerformed(int j) {
+                   if (listeners.size() == 0)
+                       return;
+                   ActionEvent e = new ActionEvent(this, 1237, Integer.toString(j));
+
+                   ActionListener l;
+                   for (int i = 0; i < listeners.size(); i++) {
+                       l = (ActionListener)listeners.get(i);
+                       l.actionPerformed(e);
+                   }
+               }
+
+           }
+    
+    
+
+    public class speedBtnAction extends AbstractAction {
+
+        public void actionPerformed(ActionEvent evt) {
+            System.out.println(evt.getActionCommand());
+
+            if (evt.getActionCommand().equals("Start")) {
+                speedBtn.setText("Stop");
+                ctt = new CelltrafficTask();
+                setTimer(speed.getValue());
+
+            } else {
+                ctt.cancel();
+                speedBtn.setText("Start");
+
+            }
+        }
+
+    }
+
+    public class WeiterAction extends AbstractAction {
+
+        public void actionPerformed(ActionEvent evt) {
+            fireActionPerformed();
+            gp.repaint();
+        }
+
+        Vector listeners = new Vector();
+        public void addActionListener(ActionListener l) {
+            listeners.add(l);
+        }
+
+        public void removeActionListener(ActionListener l) {
+            listeners.remove(l);
+        }
+
+        void fireActionPerformed() {
+            if (listeners.size() == 0)
+                return;
+            ActionEvent e = new ActionEvent(this, 1234, "updated");
+
+            ActionListener l;
+            for (int i = 0; i < listeners.size(); i++) {
+                l = (ActionListener)listeners.get(i);
+                l.actionPerformed(e);
+            }
+        }
+
+    }
+
+    class CelltrafficTask extends TimerTask {
+        public void run() {
+            // TODO int setzen
+            wa.fireActionPerformed();
+            gp.repaint();
+
+        }
+    }
+
+    public void setTimer(int i) {
+        Timer timer = new Timer();
+        int interval = 30 * (21 - i);
+        timer.schedule(ctt, 0, interval);
+
+    }
 
 }

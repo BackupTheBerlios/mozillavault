@@ -1,8 +1,9 @@
 /*
- * $Id: Source.java,v 1.10 2003/10/30 10:36:08 moleman Exp $
+ * $Id: Source.java,v 1.11 2003/10/31 01:56:47 moleman Exp $
  */
 package objects;
 
+import java.awt.event.ActionEvent;
 import java.util.Random;
 
 public class Source extends Route {
@@ -18,7 +19,7 @@ public class Source extends Route {
 
     public void update() {
         timer++;
-        if (timer == interval) {
+        if (timer >= interval) {
 
 
             Random rand = new Random();
@@ -61,6 +62,22 @@ public class Source extends Route {
 	 */
     public void setInterval(int interval) {
         this.interval = interval;
+    }
+    
+    public void actionPerformed(ActionEvent e) {
+        if(e.getID() == 1235){ //output rate
+            int newInterval=11 - Integer.parseInt(e.getActionCommand());
+        System.out.println("ändere outputrate: " +newInterval);  
+         interval=newInterval;
+        }
+        else if(e.getID()==1236){ // p_truck
+            p_truck=(double)(Double.parseDouble(e.getActionCommand()) / 100.00);
+            System.out.println("pTruck: "+Double.toString( p_truck));
+        }
+        else{
+                super.actionPerformed(e) ;
+        }
+
     }
 
 }
