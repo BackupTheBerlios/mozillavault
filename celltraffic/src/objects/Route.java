@@ -5,6 +5,8 @@
 package objects;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Random;
 
@@ -12,7 +14,7 @@ import java.util.Random;
  * @author Jonas Sprenger
  *  
  */
-public abstract class Route extends Observable {
+public abstract class Route extends Observable implements ActionListener{
 	double p_dec = 0.3;
 	/**
 	 * reference to the next route object
@@ -56,15 +58,17 @@ public abstract class Route extends Observable {
 
 	public Route() {
 		nextRoute = null;
-		road = new Object[1][100];
-		for (int i = 0; i < 100; i++) {
+		road = new Object[1][80];
+		for (int i = 0; i < 80; i++) {
 			road[0][i] = new EmptyVehicle();
 		}
-		
-		  road[0][90] = new Car(); road[0][34] = new Car(); road[0][45] = new
+		/*
+		road[0][0] = new Car(); 			
+		   road[0][90] = new Car(); road[0][34] = new Car(); road[0][45] = new
 		 Car(); road[0][50] = new Car(); road[0][52] = new Car(); road[0][11] =
 		  new Car(); road[0][22] = new Car(); road[0][12] = new Car();
 		  road[0][13] = new Car(); road[0][1] = new Car();
+		  */
 		 
 	}
 	/**
@@ -72,6 +76,7 @@ public abstract class Route extends Observable {
 	 *  
 	 */
 	public void update() {
+		System.out.println("Single lane .......");
 		for (int i = road[0].length - 1; i >= 0; i--) {
 			for (int j = road.length - 1; j >= 0; j--) {
 				if (road[j][i] instanceof Car) {
@@ -387,5 +392,8 @@ public abstract class Route extends Observable {
 		}
 		return relFlow;
 	}
-
+	public void actionPerformed(ActionEvent e) {
+			update();
+			
+		}
 }

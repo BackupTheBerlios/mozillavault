@@ -4,7 +4,7 @@
  * jsprenger Exp $
 =======
  * Created on 15.10.2003
- * $Id: GraphikPanel.java,v 1.11 2003/10/29 11:25:46 jsprenger Exp $
+ * $Id: GraphikPanel.java,v 1.12 2003/10/29 15:41:24 jsprenger Exp $
 >>>>>>> 1.5
  */
 package gui;
@@ -35,7 +35,7 @@ public class GraphikPanel extends JPanel {
 	Object routeList[];
 	Route strasse, route;
 	int cellSize = 5;
-	int nullPunktX = 400;
+	int nullPunktX = 500;
 	int nullPunktY = 250;
 
 	public GraphikPanel(Route s) {
@@ -72,6 +72,7 @@ public class GraphikPanel extends JPanel {
 		}
 		else if (strasse instanceof RouteSingleLane) {
 					drawRouteSingleLaneL(g);
+					
 			for (int i = list.length - 1; i >= 0; i--) {
 					  for (int j = list[i].length - 1; j >= 0; j--) {
 						  if (list[i][j] instanceof Truck) {
@@ -101,64 +102,44 @@ public class GraphikPanel extends JPanel {
 		int breite = 10;
 		int hoehe = 10;
 
-		p.addPoint(nullPunktX, nullPunktY);
-		p.addPoint(nullPunktX + maxX / 2, nullPunktY);
-		p.addPoint(nullPunktX + maxX / 2, nullPunktY - maxY / 2);
-		p.addPoint(nullPunktX + maxX / 2 + breite, nullPunktY - maxY / 2);
-
-		p.addPoint(nullPunktX + maxX / 2 + breite, nullPunktY);
-		p.addPoint(nullPunktX + maxX + breite, nullPunktY);
-		p.addPoint(nullPunktX + maxX + breite, nullPunktY + hoehe);
-		p.addPoint(nullPunktX + maxX / 2 + breite, nullPunktY + hoehe);
-
-		p.addPoint(
-			nullPunktX + maxX / 2 + breite,
-			nullPunktY + hoehe + maxY / 2);
-		p.addPoint(nullPunktX + maxX / 2, nullPunktY + hoehe + maxY / 2);
-		p.addPoint(nullPunktX + maxX / 2, nullPunktY + hoehe);
-		p.addPoint(nullPunktX, nullPunktY + hoehe);
-
 		g.setColor(Color.WHITE);
-		g.fillPolygon(p);
+		//g.fillPolygon(p);
 
 		//g.setColor(this.getBackground());
 		//g.drawPolygon(p);
 
-		g.setColor(Color.black);
-		System.out.println("zeichnet...StrasseKreuzung");
+		
+		g.drawRect(nullPunktX, nullPunktY, 2*cellSize, 2*cellSize);
+		//g.fillRect(x, y, w, h);
+	//	System.out.println("zeichnet...StrasseKreuzung");
 	}
 
 	void drawRouteSingleLane(Graphics g, int x, int y, int w, int h) {
-		g.setColor(Color.WHITE);
-		//g.drawRect(x, y, w, h);
-		g.fillRect(x, y, w, h);
-
-		System.out.println("zeichnet...StrasseEinspurig " + x + "  " + y);
+		g.setColor(Color.BLACK);
+		g.drawRect(x, y, w, h);
+		//g.fillRect(x, y, w, h);
+		//System.out.println("zeichnet...StrasseEinspurig " + x + "  " + y);
 	}
+	
 	void drawRouteSingleLaneL(Graphics g) {
 			g.drawRect(
 				nullPunktX - 1,
 				nullPunktY - 1,
 				list[0].length * cellSize + 1,
 				list.length * cellSize + 1);
-
 		 //   System.out.println("zeichnet...StrasseEinspurig");
 		}
 	void drawCar(Graphics g, int x, int y) {
-		g.setColor(Car.getColor());
-		System.out.println("zeichnet Vehicle..." + x + "." + y);
-		g.fillRect(x, y, cellSize - 1, cellSize);
+		g.setColor(Color.red);
+		//System.out.println("zeichnet Vehicle..." + x + "." + y);
+		g.fillRect(x, y, cellSize - 1, cellSize-1);
 
 	}
 	void drawTruck(Graphics g, int x, int y) {
 			//g.setColor(Car.getColor());
-			g.setColor(Color.red);
+			g.setColor(Color.green);
 			//System.out.println("zeichnet Truck..." + x + "." + y);
-			g.fillRect(
-				nullPunktX + x * cellSize,
-				nullPunktY + y * cellSize,
-				cellSize - 1,
-				cellSize);
+		g.fillRect(x, y, cellSize - 1, cellSize-1);
 
 		}
 

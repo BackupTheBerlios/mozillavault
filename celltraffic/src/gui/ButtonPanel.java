@@ -6,8 +6,10 @@ package gui;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -35,6 +37,7 @@ public class ButtonPanel extends JPanel implements Observer {
     Route w, x;
     GraphikPanel gp;
     GridLayout gridLayout;
+	WeiterAction wa;
     public ButtonPanel(Route w, Route x, GraphikPanel gp) {
         gridLayout = new GridLayout(3, 2);
         this.setLayout(gridLayout);
@@ -52,15 +55,18 @@ public class ButtonPanel extends JPanel implements Observer {
 		 */
 
         weiter = new JButton("weiter");
-        
-        weiter.addActionListener(new WeiterAction());
+		wa = new WeiterAction();
+		
+        weiter.addActionListener(wa);
         this.add(weiter);
 
         this.w = w;
         this.x = x;
         this.gp = gp;
     }
-
+	public WeiterAction getWeiterAction(){
+		return wa;
+	}
     public void update(Observable o, Object obj) {
         l_numVehicles.setText(obj.toString() );
         //System.out.println( name + " lacht über \"" + obj + "\"" );
@@ -85,13 +91,33 @@ public class ButtonPanel extends JPanel implements Observer {
 
         }
     }
-    private class WeiterAction extends AbstractAction {
+    public  class WeiterAction extends AbstractAction {
         public void actionPerformed(ActionEvent evt) {
-            w.update();
-            x.update();
+           // w.update();
+            //x.update();
+            fireActionPerformed();
             gp.repaint();
 
         }
+		Vector listeners = new Vector();
+			public void addActionListener(ActionListener l) {
+				listeners.add(l);
+			}
+			public void removeActionListener(ActionListener l) {
+				listeners.remove(l);
+			}
+			void fireActionPerformed() {
+				if (listeners.size() == 0)
+					return;
+				ActionEvent e = new ActionEvent(this,1234, "updated");
+				
+				ActionListener l;
+				for (int i = 0; i < listeners.size(); i++) {
+					l = (ActionListener)listeners.get(i);
+					l.actionPerformed(e);
+				}
+			}
+
 
     }
 

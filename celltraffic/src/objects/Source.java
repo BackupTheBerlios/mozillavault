@@ -1,11 +1,13 @@
 /*
- * Created on 15.10.2003 $Id: Source.java,v 1.6 2003/10/29 05:21:22 moleman Exp $
+ * Created on 15.10.2003 $Id: Source.java,v 1.7 2003/10/29 15:41:24 jsprenger Exp $
  */
 package objects;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Source extends Route {
+public class Source extends Route implements ActionListener{
 
     int timer = 0;
     int interval = 2;
@@ -33,7 +35,8 @@ public class Source extends Route {
                     Car v = new Car();
                     v.setHandled(false);
                     setVehicle(v, 0, 0);
-                }
+				System.out.println("new car created");
+               }
             }
 
             super.update();
@@ -55,5 +58,22 @@ public class Source extends Route {
     public void setInterval(int interval) {
         this.interval = interval;
     }
+
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void actionPerformed(ActionEvent e) {
+		update();
+			
+	}
+
+	/* (non-Javadoc)
+	 * @see java.awt.ActiveEvent#dispatch()
+	 */
+	public void dispatch() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

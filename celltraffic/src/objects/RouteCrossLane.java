@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: RouteCrossLane.java,v 1.5 2003/10/29 10:52:13 jsprenger Exp $
+ * $Id: RouteCrossLane.java,v 1.6 2003/10/29 15:41:24 jsprenger Exp $
  */
 package objects;
 
@@ -17,10 +17,14 @@ public class RouteCrossLane extends Route {
 	List list;
 	/*
 	 * 
-	 * index 0 = left side
-	 * index 1 = bottom
-	 * index 2 = right
-	 * index 3 = top
+	 * index 0 = left side <----
+	 * index 1 = left side ---->
+	 * index 2 = bottom v
+	 * index 3 = bottom A
+	 * index 4 = right side ---->
+	 * index 5 = right side <----
+	 * index 6 = top A
+	 * index 7 = top v
 	 */
 	
 	Object nextRoute[] = new Object[8];
@@ -52,16 +56,44 @@ public class RouteCrossLane extends Route {
 	}
 	public void update() {
 
-		for (int i = road.length - 1; i > 0; i--) {
-			for (int j = road[i].length - 1; j > 0; j--) {
-
-				if (road[i][j] instanceof Car) {
-					Vehicle v = getVehicle(i, j);
-					v.setHandled(true);
-					advance(0, i, rg.getRandom3());
+		for (int i = road[0].length - 1; i >= 0; i--) {
+			for (int j = road.length - 1; j >= 0; j--) {
+				if (road[j][i] instanceof Car) {
+					getVehicle(j, i).setHandled(false);
 				}
 			}
-
+		}
+		//	System.out.println("entering Route::update");
+		for (int i = road[0].length - 1; i >= 0; i--) {
+			for (int j = road.length - 1; j >= 0; j--) {
+				if (road[j][i] instanceof Car) {
+					accelerate(j, i);
+				}
+			}
+		}
+		for (int i = road[0].length - 1; i >= 0; i--) {
+			for (int j = road.length - 1; j >= 0; j--) {
+				if (road[j][i] instanceof Car) {
+					decelerate(j, i);
+				}
+			}
+		}
+		for (int i = road[0].length - 1; i >= 0; i--) {
+			for (int j = road.length - 1; j >= 0; j--) {
+				if (road[j][i] instanceof Car) {
+					stochasticDecelerate(j, i);
+				}
+			}
+		}
+		for (int i = road[0].length - 1; i >= 0; i--) {
+			for (int j = road.length - 1; j >= 0; j--) {
+				if ((road[j][i] instanceof Car)
+					&& (getVehicle(j, i).isHandled() == false)) {
+					getVehicle(j, i).setHandled(true);
+					Vehicle a = getVehicle(j,i);
+					advance(j, i,a.getDirection());
+				}
+			}
 		}
 	}
 	protected void advance(int x, int y, int r) {
