@@ -1,19 +1,22 @@
 /*
  * Created on 15.10.2003
- *$Id: ButtonPanel.java,v 1.3 2003/10/23 18:00:16 moleman Exp $
+ *$Id: ButtonPanel.java,v 1.4 2003/10/25 12:38:45 jsprenger Exp $
  */
 package gui;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import objects.Route;
 import objects.Vehicle;
-import objects.RouteSingleLane;
 
 /**
  * @author Jonas Sprenger
@@ -22,14 +25,23 @@ import objects.RouteSingleLane;
  * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class ButtonPanel extends JPanel {
-	JButton produzent,weiter;
-	
-	RouteSingleLane w;
+	JButton produzent, weiter;
+	JSlider speed;
+
+	Route w;
 	GraphikPanel gp;
 	GridLayout gridLayout;
-	public ButtonPanel(RouteSingleLane w, GraphikPanel gp) {
-		gridLayout = new GridLayout(2, 1);	
+	public ButtonPanel(Route w, GraphikPanel gp) {
+		gridLayout = new GridLayout(3, 1);
 		this.setLayout(gridLayout);
+
+		JPanel p = new JPanel();
+		speed = new JSlider(0, 100, 50);
+		speed.addChangeListener(new SpeedAction());
+		p.add(new JLabel("speed"));
+		p.add(speed);
+		this.add(p);
+		
 		produzent = new JButton("produzieren");
 		produzent.addActionListener(new ProdAction());
 		this.add(produzent);
@@ -45,7 +57,6 @@ public class ButtonPanel extends JPanel {
 	private class ProdAction extends AbstractAction {
 		public void actionPerformed(ActionEvent evt) {
 			if (!w.produzentBelegt()) {
-				System.out.println("neues Object erzeugt...");
 				//w.addPoint(new Vehicle(0, 0));
 
 			}
@@ -53,22 +64,28 @@ public class ButtonPanel extends JPanel {
 		}
 
 	}
-	private class WeiterAction extends AbstractAction {
-		public void actionPerformed(ActionEvent evt) {
+	private class SpeedAction implements ChangeListener {
+		public void stateChanged(ChangeEvent e) {
+			int value = ((JSlider)e.getSource()).getValue();
+			System.out.println("Neuer Wert: " + value);
+		}
+	}
 
-			System.out.println("neues Object erzeugt...");
-			List l = w.getList();
-			for (int i = 0; i < l.size(); i++) {
-				{
-					Vehicle a = (Vehicle) l.get(i);
-					//a.setX(a.getX()+10);
-					gp.repaint();
-				}
+private class WeiterAction extends AbstractAction {
+	public void actionPerformed(ActionEvent evt) {
 
+		Object l[][] = w.getList();
+		for (int i = 0; i < l.length; i++) {
+			{
+				Vehicle a = (Vehicle) l[i][0];
+				//a.setX(a.getX()+10);
+				gp.repaint();
 			}
 
 		}
 
 	}
+
+}
 
 }
