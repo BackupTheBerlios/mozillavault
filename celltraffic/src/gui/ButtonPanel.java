@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- *$Id: ButtonPanel.java,v 1.5 2003/10/25 12:46:25 moleman Exp $
+ *$Id: ButtonPanel.java,v 1.6 2003/10/25 13:59:45 jsprenger Exp $
  */
 package gui;
 
@@ -16,6 +16,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import objects.Route;
+import objects.TrafficTimer;
 import objects.Vehicle;
 
 /**
@@ -60,7 +61,8 @@ public class ButtonPanel extends JPanel {
 				//w.addPoint(new Vehicle(0, 0));
 
 			//}
-
+			
+					
 		}
 
 	}
@@ -68,9 +70,9 @@ public class ButtonPanel extends JPanel {
 		public void stateChanged(ChangeEvent e) {
 			int value = ((JSlider)e.getSource()).getValue();
 			System.out.println("Neuer Wert: " + value);
-		}
+			
 	}
-
+	}
 private class WeiterAction extends AbstractAction {
 	public void actionPerformed(ActionEvent evt) {
 
