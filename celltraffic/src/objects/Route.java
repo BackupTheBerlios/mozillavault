@@ -269,7 +269,8 @@ public abstract class Route extends Observable implements ActionListener {
 						else {
 							
 							road[x][y-v.getVelocity()] = v;
-							v.setVelocity(1);
+							v.setVelocity(0);
+							v.setHandled(false );
 							} 
 						
 						

@@ -19,7 +19,7 @@ public class RandomGenerator {
 	
 	
 		public int getRandom3(){
-			return random.nextInt(2);
+			return random.nextInt(3);
 		}
 	public int getRandom(){
 				return random.nextInt();

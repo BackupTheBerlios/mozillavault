@@ -1,6 +1,6 @@
 /*
  * Created on 15.10.2003
- * $Id: RouteCrossLane.java,v 1.9 2003/10/30 14:16:55 moleman Exp $
+ * $Id: RouteCrossLane.java,v 1.10 2003/10/30 17:35:55 moleman Exp $
  */
 package objects;
 
@@ -18,7 +18,8 @@ import java.util.TimerTask;
 public class RouteCrossLane extends Route {
 	int breite;
 	List list;
-	
+	int timer;
+	int interval = 20;
 	boolean ampel=false;
 	
 	/*
@@ -55,6 +56,7 @@ public class RouteCrossLane extends Route {
 	public RouteCrossLane() {
 		super();
 		rg = new RandomGenerator();
+		timer = interval;
 
 	}
 	public RouteCrossLane(int x, int y) {
@@ -68,32 +70,21 @@ public class RouteCrossLane extends Route {
 		nextRoute[5] = new RouteSingleLane();
 		nextRoute[6] = new RouteSingleLane();
 		nextRoute[7] = new RouteSingleLane();
-		ampelTimer();
+		timer = interval;
 
 	}
 	public boolean getAmpel(){
 			return ampel;
 		}
-		class Task extends TimerTask
-		{
-		  public void run()
-		  {
+	
+	public void update() {
+		if (timer == interval) {
+			timer =0;
 			if(ampel) ampel = false;
 			else ampel = true;
-		  }
+		} else{
+			timer++;
 		}
-	
-		public void ampelTimer(){
-			Timer timer = new Timer();
-
-				// nach 1 Sek geht's los und dann alle 5 Sekunden
-			timer.schedule( new Task(), 1000, 2500 );
-
-	
-		}
-	public void update() {
-		
-		
 		for (int i = road[0].length - 1; i >= 0; i--) {
 			for (int j = road.length - 1; j >= 0; j--) {
 				if (road[j][i] instanceof Car) {
@@ -122,7 +113,7 @@ public class RouteCrossLane extends Route {
 	protected void advance(int x, int y, int r) {
 		Vehicle a = getVehicle(x, y);
 		// go straight if r = 0
-		System.out.println("Kreuzung...." + x + " " + y + " r: " + r);
+		//System.out.println("Kreuzung...." + x + " " + y + " r: " + r);
 		if (r == 0) {
 			if (x == 0 && y == 0) {
 				//setVehicle(new EmptyVehicle(), x, y);
@@ -157,7 +148,6 @@ public class RouteCrossLane extends Route {
 		}
 		//		turn right if r = 2
 		if (r == 2) {
-
 			if (x == 0 && y == 0) {
 				setVehicle(a, 0, 10, x, y);
 
@@ -165,7 +155,7 @@ public class RouteCrossLane extends Route {
 				setVehicle(a, 0, 10, x, y);
 
 			} else if (x == 0 && y == 1) {
-				setVehicle(new EmptyVehicle(), x, y);
+				//setVehicle(new EmptyVehicle(), x, y);
 				setVehicle(a, 0, 10, x, y);
 
 			} else if (x == 1 && y == 1) {
@@ -198,9 +188,9 @@ public class RouteCrossLane extends Route {
 			
 			
 		} else {
-			System.out.println("Strasse nicht feei......" + x + "." + y + v);
 			Object tmp [][] = ((RouteSingleLane) nextRoute[index]).getRoad();
-			v.setHandled(true);
+			//v.setDirection(0);
+			v.setHandled(false);
 			
 			((RouteSingleLane) nextRoute[index]).setVehicle(v, oldx,oldy-v.getVelocity());//tmp[0].length-1);
 			
@@ -234,17 +224,36 @@ public class RouteCrossLane extends Route {
 			setVehicle(new EmptyVehicle(), oldx, oldy);
 
 		} else if (isFree(newx, newy,i)) {
-			System.out.println("Fall isFree..." + isFree(newx, newy));
+		//else if (road[newx][newy] instanceof EmptyVehicle){
+		
+			//System.out.println("Fall isFree..." + isFree(newx, newy));
 			
-			setVehicle(new EmptyVehicle(), oldx, oldy);
 			v.setDirection(-1);
 			road[newx][newy] = v;
+			setVehicle(new EmptyVehicle(), oldx, oldy);
+			
 		
 			//  if (v instanceof Car)
 			//      System.out.println("set vehicle at " + x + "." + y);
 		} else {
+			//go straight if field is blocked 
+			
 			setVehicle(v, oldx, oldy);
-			System.out.println("Fall sollte nicht eintretten...");
+			//System.err.println("Fall behoben.........."+v.getDirection());
+			if(rg.getRandom2() < 0.3){
+			v.setDirection(2);
+			System.err.println("keinen Bock mehr, fahre rechts");
+			v.setHandled(false);
+			} else{
+				System.err.println("!!!!!!!!!!!ich bin geduldig!");
+			}
+			/*for(int _i=0; _i < road.length;_i++){
+				for( int _j=0; _j<road[_i].length;_j++){	
+					System.out.println(getVehicle(_i,_j).toString());
+				}
+				}*/
+		
+
 		}
 	}
 	public boolean isFree(int x, int y, int i) {
