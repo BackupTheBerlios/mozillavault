@@ -320,6 +320,7 @@ public abstract class Route extends Observable {
     }
 
     public double avgSpeed() {
+    	if(numVehicles()>0){
         int sumSpeed = 0;
         for (int j = 0; j <= road.length - 1; j++) {
             for (int i = 0; i <= road[j].length - 1; i++) {
@@ -329,6 +330,9 @@ public abstract class Route extends Observable {
             }
         }
         return sumSpeed / numVehicles();
+    	} else{
+    		return 0;
+    	}
     }
 
     public int numVehicles() {
